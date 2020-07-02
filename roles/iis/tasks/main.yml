@@ -1,0 +1,12 @@
+---
+- name: Install IIS Web-Server with sub features and management tools
+  win_feature:
+    name: Web-Server,web-asp-Net,Web-Http-Logging
+    state: present
+    include_sub_features: yes
+    include_management_tools: yes
+  register: win_feature
+
+- name: Reboot if installing Web-Server feature requires it
+  win_reboot:
+  when: win_feature.reboot_required

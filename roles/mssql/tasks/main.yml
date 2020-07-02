@@ -1,0 +1,53 @@
+---
+- name: Install MSSQL 2014 Express and Tools
+  win_chocolatey:
+    name:
+    - mssqlserver2014express
+    - msdeploy
+
+- name: Fix PowerShell modules installation
+  win_shell: |
+     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+     Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+     [Net.ServicePointManager]::SecurityProtocol = "tls12"
+     Install-Module sqlserver -AllowClobber
+
+- name: Enabling MSSQL TCP port 1433
+  win_shell: |
+    import-module sqlps;
+    $MachineObject = new-object ('Microsoft.SqlServer.Management.Smo.WMI.ManagedComputer') $env:computername
+    $instance = $MachineObject.getSmoObject("ManagedComputer[@Name='$env:computername']/" + "ServerInstance[@Name='SQLEXPRESS']")
+    $instance.ServerProtocols['Tcp'].IPAddresses['IPAll'].IPAddressProperties['TcpPort'].Value = "1433"
+    $instance.ServerProtocols['Tcp'].IPAddresses['IPAll'].IPAddressProperties['TcpDynamicPorts'].Value = ""
+    $instance.ServerProtocols['Tcp'].IsEnabled = $true;
+    $instance.ServerProtocols['Tcp'].Alter()
+
+- name: Enable MSSQL Mixed Mode Authentication
+  win_regedit:
+    path: HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQLServer
+    name: LoginMode
+    data: 2
+    type: dword
+
+- name: Enable MSSQL Audit all Logins
+  win_regedit:
+    path: HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQLServer
+    name: AuditLevel
+    data: 3
+    type: dword
+
+- name: Firewall rule to allow SQL Server on TCP port 1433
+  win_firewall_rule:
+    name: SQL Server
+    localport: 1433
+    action: allow
+    direction: in
+    protocol: tcp
+    state: present
+    enabled: yes
+
+- name: Restart MSSQL Service
+  win_service:
+    name: MSSQL$SQLEXPRESS
+    state: restarted
