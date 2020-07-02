@@ -1,0 +1,22 @@
+---
+# Configure ADDS
+- name: Install AD-Domain-Services feature
+  win_feature:
+    name: AD-Domain-Services
+    include_management_tools: true
+    include_sub_features: true
+    state: present
+  register: adds_result
+- name: Collect ADDS provision result
+  debug:
+    msg: "{{adds_result}}"
+- name : pause for 10 seconds before provisioning another feature
+  pause:
+    seconds: 10
+
+# Reboot after ADDS configuration
+- name: Reboot after ADDS configuration
+  win_reboot:
+    connect_timeout: 15
+    post_reboot_delay: 15
+  when: adds_result.reboot_required

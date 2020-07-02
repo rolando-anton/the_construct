@@ -3,6 +3,6 @@
     - { role: bootstrap,
         hostname: AD
       }
-#    - { role: iis }
-#    - { role: mssql }
+    - { role: dns }
+    - { role: ad }
 #    - { role: supersecurebank }
