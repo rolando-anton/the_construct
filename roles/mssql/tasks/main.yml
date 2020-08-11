@@ -3,7 +3,6 @@
   win_chocolatey:
     name:
     - mssqlserver2014express
-    - msdeploy
 
 - name: Fix PowerShell modules installation
   win_shell: |

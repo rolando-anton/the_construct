@@ -9,4 +9,11 @@
 
 - name: Reboot if installing Web-Server feature requires it
   win_reboot:
+    connect_timeout: 15
+    post_reboot_delay: 15
   when: win_feature.reboot_required
+
+- name: Install MSDeploy
+  win_chocolatey:
+    name:
+    - msdeploy

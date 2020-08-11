@@ -34,4 +34,7 @@
 
 - name: Reboot
   win_reboot:
+    connect_timeout: 15
+    post_reboot_delay: 15
   when: res.reboot_required
+

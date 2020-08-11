@@ -1,8 +1,5 @@
 - hosts: ad
   roles:
-    - { role: bootstrap,
-        hostname: AD
-      }
-    - { role: dns }
-    - { role: ad }
-#    - { role: supersecurebank }
+    - role: bootstrap,
+       hostname: AD
+    - role: ad 

@@ -1,8 +1,7 @@
 - hosts: iis-mssql 
   roles:
-    - { role: bootstrap,
-        hostname: IIS-MSSQL
-      }
-    - { role: iis }
-    - { role: mssql }
-    - { role: supersecurebank }
+    - role: bootstrap
+      hostname: IIS-MSSQL
+    - role: iis
+    - role: mssql
+    - role: supersecurebank
