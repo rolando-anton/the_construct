@@ -1,5 +1,0 @@
-- hosts: ad
-  roles:
-    - role: bootstrap,
-       hostname: AD
-    - role: ad 

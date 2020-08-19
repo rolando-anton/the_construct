@@ -1,0 +1,57 @@
+---
+- name: Install AD-Domain-Services feature
+  win_feature:
+    name: AD-Domain-Services
+    include_management_tools: true
+    include_sub_features: true
+    state: present
+  register: adds_result
+
+- name: Collect ADDS provision result
+  debug:
+    msg: "{{adds_result}}"
+
+- name: Ensure xActiveDirectory PS DSC module is installed
+  win_psmodule:
+    name: xActiveDirectory
+    state: present
+
+- name : Pause for 10 seconds
+  pause:
+    seconds: 10
+
+
+- name: Reboot after ADDS configuration
+  win_reboot:
+    connect_timeout: 15
+    post_reboot_delay: 15
+  when: adds_result.reboot_required
+
+- name: Creating a windows domain
+  win_domain:
+    dns_domain_name: "{{ dns_name }}"
+    safe_mode_password: "40Net123#"
+  register: domain_creation
+
+- name: Reboot if domain was just created
+  win_reboot:
+    connect_timeout: 15
+    post_reboot_delay: 15
+  when: domain_creation.reboot_required
+
+- name: Promote Domain Controller
+  win_domain_controller:
+    dns_domain_name: "{{ dns_name }}"
+    domain_admin_user: "{{ initial_domain_admin }}@{{ dns_name }}"
+    domain_admin_password: "{{ initial_domain_admin_password }}"
+    safe_mode_password: "{{ initial_domain_admin_password }}"
+    state: domain_controller
+    log_path: C:\Windows\Temp\promotion.txt
+  register: dc_promotion
+
+
+- name: Reboot after promote to a domain controller
+  win_reboot:
+    connect_timeout: 15
+    post_reboot_delay: 15
+  when: dc_promotion.reboot_required

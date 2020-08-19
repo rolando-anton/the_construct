@@ -1,0 +1,46 @@
+---
+- name: Set domain root
+  set_fact:
+    domain_root_path: DC={{ dns_name.split('.') | join(',DC=') }}
+
+- name: Create root OU
+  win_dsc:
+    resource_name: xADOrganizationalUnit
+    Name: "{{ root_ou }}"
+    Path: "{{ domain_root_path }}" 
+    ProtectedFromAccidentalDeletion: no
+    Ensure: Present
+
+- name: Set root OU path
+  set_fact:
+    parent_ou: "OU={{ root_ou }}, {{ domain_root_path }}"
+
+- name: Create child OUs
+  win_dsc:
+    resource_name: xADOrganizationalUnit
+    Name: "{{ item }}"
+    Path: "{{ parent_ou }}"
+    ProtectedFromAccidentalDeletion: no
+    Ensure: Present
+  register: child_ou
+  loop: "{{ child_ous }}"
+
+- name: Create Employees Groups
+  win_domain_group:
+    resource_name: xADOrganizationalUnit
+    Name: "{{ item }}-Employees"
+    scope: global
+    ignore_protection: yes
+    organization_unit: "OU={{ item }}, {{ parent_ou }}"
+    state: Present
+  with_items: "{{ child_ous }}"
+
+- name: Create Managers Groups
+  win_domain_group:
+    resource_name: xADOrganizationalUnit
+    Name: "{{ item }}-Managers"
+    scope: global
+    ignore_protection: yes
+    organization_unit: "OU={{ item }}, {{ parent_ou }}"
+    state: Present
+  with_items: "{{ child_ous }}"

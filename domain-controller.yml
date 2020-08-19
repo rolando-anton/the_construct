@@ -1,0 +1,19 @@
+- hosts: ad
+  vars:
+      hostname: AD
+      dns_name: fortilabs.local
+      initial_domain_admin: administrator
+      initial_domain_admin_password: 40Net123#
+      root_ou: Corporation
+      child_ous:
+        - Finance
+        - IT
+        - Marketing
+        - Operations
+        - Services
+        - Sales
+      groups:
+        - 
+  roles:
+#    - role: bootstrap
+    - role: domain-controller
