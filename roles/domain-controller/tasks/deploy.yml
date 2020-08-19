@@ -16,17 +16,6 @@
     name: xActiveDirectory
     state: present
 
-- name : Pause for 10 seconds
-  pause:
-    seconds: 10
-
-
-- name: Reboot after ADDS configuration
-  win_reboot:
-    connect_timeout: 15
-    post_reboot_delay: 15
-  when: adds_result.reboot_required
-
 - name: Creating a windows domain
   win_domain:
     dns_domain_name: "{{ dns_name }}"
@@ -50,8 +39,15 @@
   register: dc_promotion
 
 
-- name: Reboot after promote to a domain controller
-  win_reboot:
-    connect_timeout: 15
-    post_reboot_delay: 15
-  when: dc_promotion.reboot_required
+- name: Ensure domain is available
+  win_dsc:
+    resource_name: xWaitForADDomain
+    DomainName: "{{ dns_name }}"
+    RetryCount: 100
+    RetryIntervalSec: 10
+
+- name: Set a weak password policy
+  win_command: powershell.exe -
+  args:
+    stdin: "Set-ADDefaultDomainPasswordPolicy -MinPasswordLength 1 -ComplexityEnabled $False -Identity {{ dns_name }}"
+
