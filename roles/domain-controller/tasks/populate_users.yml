@@ -1,0 +1,8 @@
+---
+- name: Reading User batch
+  read_csv:
+     path: users.csv
+  register: users_list
+
+- debug:
+  msg: 'User {{ users_list.list.1.GivenName }} Last Name {{ users_list.list.1.Surname }} and Phone {{ users_list.list.1.TelephoneNumber }}'

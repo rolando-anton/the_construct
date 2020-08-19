@@ -12,8 +12,6 @@
         - Operations
         - Services
         - Sales
-      groups:
-        - 
   roles:
-    - role: bootstrap
+#    - role: bootstrap
     - role: domain-controller
