@@ -23,24 +23,24 @@
     ProtectedFromAccidentalDeletion: no
     Ensure: Present
   register: child_ou
-  loop: "{{ child_ous }}"
+  with_items: "{{ child_ous }}"
+
+
 
 - name: Create Employees Groups
   win_domain_group:
-    resource_name: xADOrganizationalUnit
-    Name: "{{ item }}-Employees"
+    name: "{{ item }}-Employees"
     scope: global
     ignore_protection: yes
-    organization_unit: "OU={{ item }}, {{ parent_ou }}"
+    path: "OU={{ item }}, {{ parent_ou }}"
     state: Present
   with_items: "{{ child_ous }}"
 
 - name: Create Managers Groups
   win_domain_group:
-    resource_name: xADOrganizationalUnit
-    Name: "{{ item }}-Managers"
+    name: "{{ item }}-Managers"
     scope: global
     ignore_protection: yes
-    organization_unit: "OU={{ item }}, {{ parent_ou }}"
+    path: "OU={{ item }}, {{ parent_ou }}"
     state: Present
   with_items: "{{ child_ous }}"
