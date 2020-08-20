@@ -1,8 +1,39 @@
 ---
-- name: Reading User batch
+- name: Read Users
   read_csv:
-     path: users.csv
+    path: roles/domain-controller/files/users.csv
+    key: UserName
   register: users_list
+  delegate_to: localhost
 
-- debug:
-  msg: 'User {{ users_list.list.1.GivenName }} Last Name {{ users_list.list.1.Surname }} and Phone {{ users_list.list.1.TelephoneNumber }}'
+- name: Set domain root
+  set_fact:
+    domain_root_path: DC={{ dns_name.split('.') | join(',DC=') }}
+
+- name: Set root OU path
+  set_fact:
+    parent_ou: "OU={{ root_ou }}, {{ domain_root_path }}"
+
+- name: configure active_directory employees
+  win_domain_user:
+    state: present
+    name: "{{ item.key | lower }}"
+    firstname: "{{ item.value.GivenName }}"
+    surname: "{{ item.value.Surname }}"
+    password: "{{ item.key }}123#"
+    password_never_expires: true
+    user_cannot_change_password: false
+    account_locked: false
+    path: "OU={{ item.value.OU }}, {{ parent_ou }}"
+    update_password: always
+    email: "{{ item.key | lower  + '@' + dns_name }}"
+    upn: "{{ item.key | lower  + '@' + dns_name }}"
+    city: "{{ item.value.City }}"
+    street: "{{ item.value.StreetAddress }}"
+    country: "{{ item.value.Country }}"
+    groups_action: add
+    attributes:
+      displayName: "{{ item.value.GivenName }} {{ item.value.Surname }}"
+      telephoneNumber: "{{ item.value.TelephoneNumber }}"
+    groups: "{{ item.value.OU + '-' + item.value.Group }}"
+  with_items: "{{ users_list.dict|dict2items }}"
