@@ -7,7 +7,7 @@
     }
 
 - name: Convert DHCP IP to Static
-  async: 100 
+  async: 60 
   poll: 10 
   retries: 5
   win_shell: |

@@ -1,7 +1,7 @@
-- hosts: iis-mssql 
+- hosts: iis_mssql 
   roles:
     - role: bootstrap
-      hostname: IIS-MSSQL
+      hostname: SuperSecureBank
     - role: iis
     - role: mssql
     - role: supersecurebank

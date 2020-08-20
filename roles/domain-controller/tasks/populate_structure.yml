@@ -10,6 +10,8 @@
     Path: "{{ domain_root_path }}" 
     ProtectedFromAccidentalDeletion: no
     Ensure: Present
+  async: 1
+  poll: 0
 
 - name: Set root OU path
   set_fact:
@@ -24,6 +26,8 @@
     Ensure: Present
   register: child_ou
   with_items: "{{ child_ous }}"
+  async: 1 
+  poll: 0
 
 - name: Create Employees Groups
   win_domain_group:
@@ -33,6 +37,8 @@
     path: "OU={{ item }}, {{ parent_ou }}"
     state: Present
   with_items: "{{ child_ous }}"
+  async: 1
+  poll: 0
 
 - name: Create Managers Groups
   win_domain_group:
@@ -42,4 +48,5 @@
     path: "OU={{ item }}, {{ parent_ou }}"
     state: Present
   with_items: "{{ child_ous }}"
-
+  async: 1
+  poll: 0

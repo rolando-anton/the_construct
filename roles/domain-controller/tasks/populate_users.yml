@@ -37,3 +37,5 @@
       telephoneNumber: "{{ item.value.TelephoneNumber }}"
     groups: "{{ item.value.OU + '-' + item.value.Group }}"
   with_items: "{{ users_list.dict|dict2items }}"
+  async: 1
+  poll: 0
