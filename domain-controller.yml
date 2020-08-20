@@ -13,5 +13,5 @@
         - Services
         - Sales
   roles:
-#    - role: bootstrap
+    - role: bootstrap
     - role: domain-controller
