@@ -8,8 +8,8 @@
 
 - name: Convert DHCP IP to Static
   async: 1000 
-  poll: 10 
-  retries: 5
+  poll: 15
+  retries: 10
   win_shell: |
     $MgmtIP = "^10\.100\.55."
     $MgmtAdapters = gwmi -cl win32_networkadapterconfiguration -filter "ipenabled = 'true'" | ? {($_.ipaddress -match $MgmtIP) -and $_.dhcpEnabled -eq 'True' }
