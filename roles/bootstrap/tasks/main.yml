@@ -7,7 +7,7 @@
     }
 
 - name: Convert DHCP IP to Static
-  async: 60 
+  async: 1000 
   poll: 10 
   retries: 5
   win_shell: |
@@ -35,6 +35,6 @@
 
 - name: Reboot
   win_reboot:
-    connect_timeout: 15
-    post_reboot_delay: 15
+    connect_timeout: 30
+    post_reboot_delay: 30
   when: res.reboot_required

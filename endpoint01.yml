@@ -1,0 +1,5 @@
+- hosts: endpoint_01
+  vars:
+      hostname: Endpoint-01
+  roles:
+    - role: bootstrap
