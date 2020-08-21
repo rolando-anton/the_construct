@@ -22,7 +22,7 @@
     safe_mode_password: "40Net123#"
   register: domain_creation
 
-- name: Reboot if domain was just created
+- name: Reboot after create the domain
   win_reboot:
     connect_timeout: 15
     post_reboot_delay: 15
@@ -39,7 +39,7 @@
   register: dc_promotion
 
 
-- name: Ensure domain is available
+- name: Waiting to the domain to become available
   win_dsc:
     resource_name: xWaitForADDomain
     DomainName: "{{ dns_name }}"
