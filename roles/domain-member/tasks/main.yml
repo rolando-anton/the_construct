@@ -1,7 +1,6 @@
 ---
 - name: Gather remote facts
   setup: {}
-  tags: common
 
 - name: Join workstation to the domain
   win_domain_membership:
