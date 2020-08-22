@@ -1,0 +1,15 @@
+---
+- name: Wait for system to become reachable over WinRM
+  wait_for_connection:
+    timeout: 900
+
+- name: Change the hostname 
+  win_hostname:
+    name: "{{ hostname }}"
+  register: res
+
+- name: Reboot
+  win_reboot:
+    connect_timeout: 60
+    post_reboot_delay: 60
+  when: res.reboot_required

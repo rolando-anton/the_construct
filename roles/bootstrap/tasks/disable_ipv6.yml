@@ -1,0 +1,12 @@
+---
+- name: Wait for system to become reachable over WinRM
+  wait_for_connection:
+    timeout: 900
+
+- name: Disable IPv6 on all interfaces
+  win_shell: |
+    $ipv6adapters = (Get-NetAdapterBinding -DisplayName *IPv6*).Name
+    foreach ($ipv6adapters in $ipv6adapters) {
+    Disable-NetAdapterBinding -Name $ipv6adapters -ComponentID ms_tcpip6
+    }
+

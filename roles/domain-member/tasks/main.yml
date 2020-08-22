@@ -1,0 +1,18 @@
+---
+- name: Gather remote facts
+  setup: {}
+  tags: common
+
+- name: Join workstation to the domain
+  win_domain_membership:
+    dns_domain_name: "{{ dns_name }}"
+    hostname: "{{ ansible_env.COMPUTERNAME }}"
+    domain_admin_user: "{{ initial_domain_admin }}@{{ dns_name }}"
+    domain_admin_password: "{{ initial_domain_admin_password }}"
+    state: domain
+  register: domain_state
+
+- name: Reboot machine if it has just joined the domain
+  win_reboot: {}
+  when: domain_state.reboot_required
+

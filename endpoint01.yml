@@ -1,5 +1,10 @@
 - hosts: endpoint_01
+  gather_facts: no
   vars:
       hostname: Endpoint-01
+      dns_name: fortilabs.local
+      initial_domain_admin: administrator
+      initial_domain_admin_password: 40Net123#
   roles:
-    - role: bootstrap
+#    - role: bootstrap
+    - role: domain-member
