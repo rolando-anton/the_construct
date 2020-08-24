@@ -1,7 +1,9 @@
 - hosts: iis_mssql 
+  gather_facts: no
+  vars:
+      hostname: SuperSecureBank
   roles:
     - role: bootstrap
-      hostname: SuperSecureBank
     - role: iis
     - role: mssql
     - role: supersecurebank

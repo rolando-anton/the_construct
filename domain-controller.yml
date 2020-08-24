@@ -1,7 +1,6 @@
 - hosts: ad
   gather_facts: no
   vars:
-      mgmt_net_regex: '^10\.100\.55.'
       hostname: AD
       dns_name: fortilabs.local
       initial_domain_admin: administrator

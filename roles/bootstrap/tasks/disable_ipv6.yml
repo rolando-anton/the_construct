@@ -1,7 +1,5 @@
 ---
-- name: Wait for system to become reachable over WinRM
-  wait_for_connection:
-    timeout: 900
+- include_tasks: roles/wait.yml
 
 - name: Disable IPv6 on all interfaces
   win_shell: |

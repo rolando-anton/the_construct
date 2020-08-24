@@ -1,30 +1,15 @@
 ---
-- name: Wait for system to become reachable over WinRM
-  wait_for_connection:
-    timeout: 900
+- include_tasks: roles/wait.yml
 
-- name: Convert DHCP IP to Static
-  win_shell: |
-    $MgmtIP = "10.100.55.*"
-    $MgmtAdapters = gwmi -cl win32_networkadapterconfiguration -filter "ipenabled = 'true'" | ? {($_.ipaddress -CLike $MgmtIP) -and $_.dhcpEnabled -eq 'True' }
-    $MgmtipAddress = [IPAddress]$MgmtAdapters.IPAddress.Trim()
-    $MgmtInterfaceIndex = $MgmtAdapters.InterfaceIndex
-    Set-NetIPInterface -InterfaceIndex $MgmtInterfaceIndex -Dhcp Disabled
-    New-NetIPAddress -InterfaceIndex "$MgmtInterfaceIndex" -AddressFamily IPv4 -PrefixLength 24 -IPAddress $MgmtipAddress 
-    $NonMgmtAdapters = gwmi -cl win32_networkadapterconfiguration -filter "ipenabled = 'true'" | ? {($_.ipaddress -notmatch $MgmtIP) -and $_.dhcpEnabled -eq 'True' }
-    foreach ($NonMgmtAdapters in $NonMgmtAdapters) {
-    $NonMgmtipAddress = $NonMgmtAdapters.IPAddress
-    $NonMgmtsubnetMask = $NonMgmtAdapters.IPSubnet
-    $NonMgmtdnsServers = $NonMgmtAdapters.DNSServerSearchOrder
-    $NonMgmtdefaultGateway = $NonMgmtAdapters.DefaultIPGateway
-    $NonMgmtAdapters.EnableStatic($NonMgmtipAddress,$NonMgmtsubnetMask)
-    $NonMgmtAdapters.SetDNSServerSearchOrder($NonMgmtdnsServers)
-    $NonMgmtAdapters.SetGateways($NonMgmtdefaultGateway)
-    }
-  async: 30 
+- win_copy:
+   src: roles/bootstrap/files/change-to-static.ps1
+   dest: 'C:\temp\'
+   remote_src: no
+
+- name: Convert DHCP to Static
+  win_command: powershell.exe -ExecutionPolicy ByPass -File C:/temp/change-to-static.ps1 {{ ansible_host }}
+  async: 111
   poll: 0
-  register: to_static
 
-- name: Wait for system to become reachable over WinRM
-  wait_for_connection:
-    timeout: 900
+- include_tasks: roles/wait.yml
+
