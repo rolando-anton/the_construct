@@ -1,0 +1,14 @@
+---
+- name: Re-Enabling UAC
+  win_regedit:
+    path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\policies\system
+    name: EnableLUA
+    data: 1
+    type: dword
+    state: present
+  register: uac_result
+
+- name: reboot after re-enabling UAC
+  win_reboot:
+  when: uac_result is changed
+

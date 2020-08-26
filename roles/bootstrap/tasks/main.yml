@@ -1,3 +1,4 @@
+- include: re-enable-uac.yml
 - include: disable_ipv6.yml
 - include: change_hostname.yml
 - include: convert_to_static.yml

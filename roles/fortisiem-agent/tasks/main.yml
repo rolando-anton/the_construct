@@ -1,0 +1,23 @@
+---
+
+- win_copy:
+   src: 'roles/fortisiem-agent/files/AoWinAgt-v4.0.0-07132020.exe'
+   dest: 'C:\temp\'
+   remote_src: no
+
+- win_copy:
+   src: 'roles/fortisiem-agent/files/InstallSettings.xml'
+   dest: 'C:\temp\'
+   remote_src: no
+
+- name: Install FortiSIEM Windows Agent
+  win_package:
+    path: 'C:\temp\AoWinAgt-v4.0.0-07132020.exe'
+    arguments:
+      - /install
+      - /quiet
+      - /log fsmagent.txt
+    chdir: 'C:\temp\'
+    product_id: 'FSM'
+
+- include_tasks: roles/wait.yml

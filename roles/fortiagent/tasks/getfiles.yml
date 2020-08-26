@@ -1,0 +1,26 @@
+---
+- name: Loging to FortiTester
+  uri:
+    url: "https://{{ fts_ip }}/api/user/login"
+    method: POST
+    body_format: json
+    validate_certs: no
+    body: { "name": "{{ fts_user }}", "password": "{{ fts_pass }}" }
+  register: login_fts
+  delegate_to: localhost
+
+- name: Download the conf.yml file to the endpoint 
+  win_get_url:
+   url: "https://{{ fts_ip }}/api/agent/conf.yml"
+   dest: 'C:\temp\conf.yml'
+   validate_certs: no
+   headers:
+      Cookie: "{{ login_fts.set_cookie }}"
+
+- name: Download the FortiAgent installer
+  win_get_url:
+   url: "https://{{ fts_ip }}/api/agent/getClient?platform=windows"
+   dest: 'C:\temp\fortiagent.exe'
+   validate_certs: no
+   headers:
+      Cookie: "{{ login_fts.set_cookie }}"

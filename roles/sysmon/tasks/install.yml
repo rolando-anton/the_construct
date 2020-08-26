@@ -1,0 +1,35 @@
+---
+- block:
+    - name: Create sysmon directory
+      win_stat:
+        path: c:\Program Files\sysmon
+      register: sysmondl
+
+    - name: download sysmon
+      win_get_url:
+        url: 'https://download.sysinternals.com/files/Sysmon.zip'
+        dest: 'c:\Program Files\Sysmon.zip'
+        timeout: 60
+      when: not sysmondl.stat.exists
+
+    - name: unzip sysmon
+      win_unzip:
+        src: 'c:\Program Files\Sysmon.zip'
+        dest: 'c:\Program Files\sysmon'
+        creates: 'c:\Program Files\sysmon\sysmon.exe'
+      when: not sysmondl.stat.exists
+
+    - name: add sysmon to PATH
+      win_path:
+        elements: 'c:\Program Files\sysmon'
+      when: not sysmondl.stat.exists
+
+- block:
+    - name: Copy Sysmon template
+      win_get_url:
+        url: 'https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml'
+        dest: 'c:\Program Files\sysmon\sysmonconfig.xml'
+
+    - name: install sysmon with defined config
+      win_command: '"c:\Program Files\sysmon\sysmon64.exe" -accepteula -i "c:\Program Files\sysmon\sysmonconfig.xml"'
+
