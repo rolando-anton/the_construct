@@ -1,0 +1,6 @@
+---
+
+win_temp_dir: 'c:\temp\atomic'
+win_log_dir: 'c:\temp\atomic\log'
+
+win_testing_atomicredteam: true

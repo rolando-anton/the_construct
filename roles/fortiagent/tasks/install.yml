@@ -1,11 +1,9 @@
 ---
-
 - name: Install FortiAgent
-  win_shell: fortiagent.exe --startup auto install
+  win_shell: fortiagent.exe --startup auto install 
   args:
     chdir: C:\temp\
     executable: cmd
-
 
 - name: Start FortiAgent
   win_shell: fortiagent.exe start
