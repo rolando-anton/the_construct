@@ -11,8 +11,8 @@
   register: uac_result
   when: uac_enabled | bool
 
-
-- name: reboot after re-enabling UAC
+- name: Reboot
   win_reboot:
-  when: uac_result is changed
-
+    connect_timeout: 60
+    post_reboot_delay: 60
+  when: uac_enabled | bool

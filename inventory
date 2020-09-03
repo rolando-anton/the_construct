@@ -20,7 +20,7 @@ all:
       utica:
       nashua:
     vars:
-      uac_enabled: true
+      uac_enabled: false
    fileserver:
     hosts:
       warehouse:

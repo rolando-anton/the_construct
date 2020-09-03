@@ -8,6 +8,6 @@
 
 - name: Reboot
   win_reboot:
-    connect_timeout: 60
-    post_reboot_delay: 60
+    connect_timeout: 300
+    post_reboot_delay: 300
   when: res.reboot_required
