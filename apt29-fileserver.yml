@@ -1,0 +1,10 @@
+- hosts: 
+    servers
+  gather_facts: no
+      uac_enabled: true
+  roles:
+    - role: bootstrap
+    - role: disable-windowsdefender
+    - role: domain-member
+    - role: sysmon
+  #  - role: fortisiem-agent

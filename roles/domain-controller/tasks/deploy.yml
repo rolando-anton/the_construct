@@ -20,7 +20,7 @@
 
 - name: Creating a windows domain
   win_domain:
-    dns_domain_name: "{{ dns_name }}"
+    dns_domain_name: "{{ dc_domain }}"
     safe_mode_password: "40Net123#"
   register: domain_creation
 
@@ -32,10 +32,10 @@
 
 - name: Promote Domain Controller
   win_domain_controller:
-    dns_domain_name: "{{ dns_name }}"
-    domain_admin_user: "{{ initial_domain_admin }}@{{ dns_name }}"
-    domain_admin_password: "{{ initial_domain_admin_password }}"
-    safe_mode_password: "{{ initial_domain_admin_password }}"
+    dns_domain_name: "{{ dc_domain }}"
+    domain_admin_user: "{{ domain_admin }}@{{ dc_domain }}"
+    domain_admin_password: "{{ domain_admin_password }}"
+    safe_mode_password: "{{ domain_admin_password }}"
     state: domain_controller
     log_path: C:\Windows\Temp\promotion.txt
   register: dc_promotion
@@ -44,12 +44,12 @@
 - name: Waiting to the domain to become available
   win_dsc:
     resource_name: xWaitForADDomain
-    DomainName: "{{ dns_name }}"
+    DomainName: "{{ dc_domain }}"
     RetryCount: 100
     RetryIntervalSec: 10
 
 - name: Set a weak password policy
   win_command: powershell.exe -
   args:
-    stdin: "Set-ADDefaultDomainPasswordPolicy -MinPasswordLength 1 -ComplexityEnabled $False -Identity {{ dns_name }}"
+    stdin: "Set-ADDefaultDomainPasswordPolicy -MinPasswordLength 1 -ComplexityEnabled $False -Identity {{ dc_domain }}"
 

@@ -1,7 +1,7 @@
 ---
 - name: Set domain root
   set_fact:
-    domain_root_path: DC={{ dns_name.split('.') | join(',DC=') }}
+    domain_root_path: DC={{ dc_domain.split('.') | join(',DC=') }}
 
 - name: Create root OU
   win_dsc:

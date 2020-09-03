@@ -8,7 +8,7 @@
 
 - name: Set domain root
   set_fact:
-    domain_root_path: DC={{ dns_name.split('.') | join(',DC=') }}
+    domain_root_path: DC={{ dc_domain.split('.') | join(',DC=') }}
 
 - name: Set root OU path
   set_fact:
@@ -26,8 +26,8 @@
     account_locked: false
     path: "OU={{ item.value.OU }}, {{ parent_ou }}"
     update_password: always
-    email: "{{ item.key | lower  + '@' + dns_name }}"
-    upn: "{{ item.key | lower  + '@' + dns_name }}"
+    email: "{{ item.key | lower  + '@' + dc_domain }}"
+    upn: "{{ item.key | lower  + '@' + dc_domain }}"
     city: "{{ item.value.City }}"
     street: "{{ item.value.StreetAddress }}"
     country: "{{ item.value.Country }}"

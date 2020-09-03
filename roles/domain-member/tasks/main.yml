@@ -2,12 +2,17 @@
 - name: Gather remote facts
   setup: {}
 
+- name: Set domain controllers as DNS servers
+  win_dns_client:
+    adapter_names: '*'
+    ipv4_addresses: "{{ domain_controller_ip }}"
+
 - name: Join workstation to the domain
   win_domain_membership:
-    dns_domain_name: "{{ dns_name }}"
+    dns_domain_name: "{{ dc_domain }}"
     hostname: "{{ ansible_env.COMPUTERNAME }}"
-    domain_admin_user: "{{ initial_domain_admin }}@{{ dns_name }}"
-    domain_admin_password: "{{ initial_domain_admin_password }}"
+    domain_admin_user: "{{ domain_admin }}@{{ dc_domain }}"
+    domain_admin_password: "{{ domain_admin_password }}"
     state: domain
   register: domain_state
 

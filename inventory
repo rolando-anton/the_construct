@@ -1,12 +1,37 @@
-[iis_mssql]
-10.100.55.2
-
-[ad]
-10.100.55.3
-
-
-[endpoint_01]
-10.100.55.5
-
-[endpoint_02]
-10.100.55.6
+all:
+  hosts:
+   warehouse: 
+      ansible_host: 10.100.55.2
+   newyork:  
+      ansible_host: 10.100.55.3
+   scarnton: 
+      ansible_host: 10.100.55.4
+   utica: 
+      ansible_host: 10.100.55.5
+   nashua: 
+      ansible_host: 10.100.55.6
+  children:
+   dc:
+    hosts:
+      newyork:
+   endpoints:
+    hosts: 
+      scarnton:
+      utica:
+      nashua:
+    vars:
+      uac_enabled: true
+   fileserver:
+    hosts:
+      warehouse:
+  vars:
+    dc_domain: dmevals.local
+    domain_admin: administrator
+    domain_admin_password: 40Net123#
+    domain_controller_ip: 10.0.0.4
+    ansible_user: fpocadmin
+    ansible_password: 40Net123#
+    ansible_winrm_server_cert_validation: ignore
+    ansible_connection: winrm
+    ansible_winrm_operation_timeout_sec: 200
+    ansible_winrm_read_timeout_sec: 600

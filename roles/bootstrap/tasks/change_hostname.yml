@@ -3,7 +3,7 @@
 
 - name: Change the hostname 
   win_hostname:
-    name: "{{ hostname }}"
+    name: "{{ inventory_hostname }}"
   register: res
 
 - name: Reboot

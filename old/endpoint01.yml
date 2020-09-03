@@ -1,10 +1,14 @@
-- hosts: endpoint_02
+- hosts: endpoint_01
   gather_facts: no
   vars:
-      hostname: Endpoint02
+      hostname: Endpoint01
+      uac_enabled: true
       dns_name: fortilabs.local
       initial_domain_admin: administrator
       initial_domain_admin_password: 40Net123#
+      fts_ip: 10.100.66.11 
+      fts_user: admin
+      fts_pass: fortipocadmin
 
   roles:
     - role: bootstrap

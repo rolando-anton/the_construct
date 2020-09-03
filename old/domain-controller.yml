@@ -2,6 +2,7 @@
   gather_facts: no
   vars:
       hostname: AD
+      uac_enabled: false 
       dns_name: fortilabs.local
       initial_domain_admin: administrator
       initial_domain_admin_password: 40Net123#
@@ -16,3 +17,4 @@
   roles:
     - role: bootstrap
     - role: domain-controller
+    - role: fortisiem-agent
