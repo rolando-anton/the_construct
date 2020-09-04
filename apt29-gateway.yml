@@ -1,0 +1,9 @@
+- hosts: gateway
+  collections:
+  - fortinet.fortios
+  tasks:
+   - name: Configure global attributes.
+     fortios_system_global:
+        vdom:  "{{ vdom }}"
+        system_global:
+            hostname: 'Gateway'

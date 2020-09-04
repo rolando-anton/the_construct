@@ -1,0 +1,28 @@
+---
+- name: Configure LDAP server entries.
+  fortios_user_ldap:
+    vdom:  "{{ vdom }}"
+    state: "present"
+    user_ldap:
+      name: "default_name_13"
+      server: "192.168.100.40"
+      port: "389"
+      cnid: "sAMAccountName"
+      dn: "{{ dc_domain.split('.') | join(',DC=') }}"
+      account_key_filter: "<your_own_value>"
+      account_key_processing: "same"
+      group_filter: "<your_own_value>"
+      group_member_check: "user-attr"
+      group_object_filter: "<your_own_value>"
+      group_search_base: "<your_own_value>"
+      member_attr: "<your_own_value>"
+      password: "<your_own_value>"
+      password_expiry_warning: "enable"
+      password_renewal: "enable"
+      port: "17"
+      secondary_server: "<your_own_value>"
+      secure: "disable"
+      tertiary_server: "<your_own_value>"
+      type: "simple"
+      username: "<your_own_value>"
+
