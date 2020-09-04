@@ -1,6 +1,5 @@
 - include: re-enable-uac.yml
   when: uac_enabled | bool
 - include: disable_ipv6.yml
-  when: ipv6_disabled | bool
 - include: change_hostname.yml
 - include: convert_to_static.yml
