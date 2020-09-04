@@ -22,22 +22,24 @@ function Convert-IpAddressToMaskLength([string] $dottedIpAddressString)
   Write-Output $result;
 }
 
-$MgmtAdapters = Get-WmiObject win32_networkadapterconfiguration -filter "ipenabled='true'" | Where -Property DHCPEnabled -eq "True"
+# Base reference: http://itproguru.com/expert/2012/01/using-powershell-to-get-or-set-networkadapterconfiguration-view-and-change-network-settings-including-dhcp-dns-ip-address-and-more-dynamic-and-static-step-by-step/
 
-foreach ($MgmtAdapters in $MgmtAdapters) {
-    $MgmtInterfaceIndex = $MgmtAdapters.InterfaceIndex
-    $MgmtipAddress = $MgmtAdapters.IPAddress
-    $MgmtsubnetMask = $MgmtAdapters.IPSubnet
-    $MgmtsubnetPrefix = Convert-IpAddressToMaskLength $MgmtsubnetMask
-    $MgmtdnsServers = $MgmtAdapters.DNSServerSearchOrder
-    $MgmtdefaultGateway = $MgmtAdapters.DefaultIPGateway
-    if ( ($MgmtdnsServers) -and ($MgmtdefaultGateway)) {
-       Set-NetIPInterface -InterfaceIndex $MgmtInterfaceIndex -Dhcp Disabled
-       New-NetIPAddress -InterfaceIndex "$MgmtInterfaceIndex" -AddressFamily IPv4 -PrefixLength "$MgmtsubnetPrefix" -IPAddress "$MgmtipAddress" -DefaultGateway "$MgmtdefaultGateway"
-       Set-DnsClientServerAddress -InterfaceIndex "$MgmtInterfaceIndex" -ServerAddresses  $MgmtdnsServers
+$Adapters = Get-WmiObject win32_networkadapterconfiguration -filter "ipenabled='true'" | Where -Property DHCPEnabled -eq "True"
+
+foreach ($Adapters in $Adapters) {
+    $InterfaceIndex = $Adapters.InterfaceIndex
+    $ipAddress = $Adapters.IPAddress
+    $subnetMask = $Adapters.IPSubnet
+    $subnetPrefix = Convert-IpAddressToMaskLength $subnetMask
+    $dnsServers = $Adapters.DNSServerSearchOrder
+    $defaultGateway = $Adapters.DefaultIPGateway
+    if ( ($dnsServers) -and ($defaultGateway)) {
+       Set-NetIPInterface -InterfaceIndex $InterfaceIndex -Dhcp Disabled
+       New-NetIPAddress -InterfaceIndex "$InterfaceIndex" -AddressFamily IPv4 -PrefixLength "$subnetPrefix" -IPAddress "$ipAddress" -DefaultGateway "$defaultGateway"
+       Set-DnsClientServerAddress -InterfaceIndex "$InterfaceIndex" -ServerAddresses  $dnsServers
     }
-    if (!$MgmtdefaultGateway) {
-       Set-NetIPInterface -InterfaceIndex $MgmtInterfaceIndex -Dhcp Disabled
-       New-NetIPAddress -InterfaceIndex "$MgmtInterfaceIndex" -AddressFamily IPv4 -PrefixLength "$MgmtsubnetPrefix" -IPAddress "$MgmtipAddress"
+    if (!$defaultGateway) {
+       Set-NetIPInterface -InterfaceIndex $InterfaceIndex -Dhcp Disabled
+       New-NetIPAddress -InterfaceIndex "$InterfaceIndex" -AddressFamily IPv4 -PrefixLength "$subnetPrefix" -IPAddress "$ipAddress"
     }
 }
