@@ -7,4 +7,3 @@
     foreach ($ipv6adapters in $ipv6adapters) {
     Disable-NetAdapterBinding -Name $ipv6adapters -ComponentID ms_tcpip6
     }
-

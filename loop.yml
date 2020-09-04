@@ -1,5 +1,5 @@
-- hosts: 
-    endpoints
+- hosts:
+    all
   gather_facts: no
   roles:
     - role: bootstrap
@@ -7,3 +7,4 @@
     - role: domain-member
     - role: sysmon
 #    - role: fortisiem-agent
+  loop: "{{ query('inventory_hostnames', 'endpoints') }}"

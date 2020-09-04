@@ -24,10 +24,7 @@
     safe_mode_password: "40Net123#"
   register: domain_creation
 
-- name: Reboot after create the domain
-  win_reboot:
-    connect_timeout: 15
-    post_reboot_delay: 15
+- include_tasks: roles/reboot.yml
   when: domain_creation.reboot_required
 
 - name: Promote Domain Controller

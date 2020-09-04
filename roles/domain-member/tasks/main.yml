@@ -16,7 +16,5 @@
     state: domain
   register: domain_state
 
-- name: Reboot machine if it has just joined the domain
-  win_reboot: {}
+- include_tasks: roles/reboot.yml
   when: domain_state.reboot_required
-

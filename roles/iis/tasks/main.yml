@@ -7,10 +7,7 @@
     include_management_tools: yes
   register: win_feature
 
-- name: Reboot if installing Web-Server feature requires it
-  win_reboot:
-    connect_timeout: 15
-    post_reboot_delay: 15
+- include_tasks: roles/reboot.yml
   when: win_feature.reboot_required
 
 - name: Install MSDeploy

@@ -19,12 +19,12 @@ all:
       scarnton:
       utica:
       nashua:
-    vars:
-      uac_enabled: false
    fileserver:
     hosts:
       warehouse:
   vars:
+    uac_enabled: false
+    ipv6_disabled: true
     dc_domain: dmevals.local
     domain_admin: administrator
     domain_admin_password: 40Net123#
@@ -33,5 +33,5 @@ all:
     ansible_password: 40Net123#
     ansible_winrm_server_cert_validation: ignore
     ansible_connection: winrm
-    ansible_winrm_operation_timeout_sec: 200
-    ansible_winrm_read_timeout_sec: 600
+    ansible_winrm_operation_timeout_sec: 300
+    ansible_winrm_read_timeout_sec: 900

@@ -8,9 +8,18 @@
         - IT
         - Marketing
         - Operations
-        - Services
         - Sales
   roles:
     - role: bootstrap
     - role: domain-controller
 #    - role: fortisiem-agent
+
+- hosts: endpoints 
+  gather_facts: no
+  roles:
+    - role: bootstrap
+    - role: disable-windowsdefender
+    - role: domain-member
+    - role: sysmon
+#    - role: fortisiem-agent
+

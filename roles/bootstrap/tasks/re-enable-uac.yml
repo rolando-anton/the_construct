@@ -9,10 +9,5 @@
     type: dword
     state: present
   register: uac_result
-  when: uac_enabled | bool
 
-- name: Reboot
-  win_reboot:
-    connect_timeout: 60
-    post_reboot_delay: 60
-  when: uac_enabled | bool
+- include_tasks: roles/wait.yml
