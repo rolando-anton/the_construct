@@ -4,9 +4,9 @@
 - name: Change the hostname 
   win_hostname:
     name: "{{ inventory_hostname }}"
-  register: res
+  register: change_hostname 
 
 - include_tasks: wait.yml
 
 - include_tasks: reboot.yml
-  when: res.reboot_required
+  when: change_hostname.reboot_required

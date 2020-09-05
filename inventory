@@ -38,12 +38,12 @@ all:
     domain_admin: administrator
     domain_admin_password: 40Net123#
     domain_controller_ip: 10.0.0.4
-    reboot-timeout: 120
-    reboot-post-delay: 120
-    wait-connect_timeout: 60
-    wait-sleep: 10
-    wait-delay: 10
-    wait-timeout: 300
+    reboot_timeout: 120
+    reboot_post_delay: 120
+    wait_connect_timeout: 60
+    wait_sleep: 10
+    wait_delay: 10
+    wait_timeout: 300
     ansible_user: fpocadmin
     ansible_password: 40Net123#
     ansible_winrm_server_cert_validation: ignore

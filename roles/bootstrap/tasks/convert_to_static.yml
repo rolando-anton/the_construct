@@ -7,9 +7,12 @@
    remote_src: no
 
 - name: Convert DHCP to Static
-  win_command: powershell.exe -ExecutionPolicy ByPass -File C:/temp/change-to-static.ps1 
+  win_command: powershell.exe -ExecutionPolicy ByPass -File C:/temp/change-to-static.ps1
   async: 111
   poll: 0
 
 - include_tasks: wait.yml
 
+- win_file: 
+   path: 'C:\temp\change-to-static.ps1'
+   state: absent

@@ -1,5 +1,5 @@
 ---
-- include_tasks: roles/wait.yml
+- include_tasks: wait.yml
 
 - name: Re-Enabling UAC
   win_regedit:
@@ -10,4 +10,4 @@
     state: present
   register: uac_result
 
-- include_tasks: roles/wait.yml
+- include_tasks: wait.yml

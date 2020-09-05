@@ -1,0 +1,16 @@
+- hosts: dc 
+  gather_facts: no
+  vars:
+      uac_enabled: false 
+      root_ou: Employees
+      child_ous:
+        - Finance
+        - IT
+        - Marketing
+        - Operations
+        - Sales
+  roles:
+#    - role: bootstrap
+    - role: domain-controller
+#    - role: fortisiem-agent
+

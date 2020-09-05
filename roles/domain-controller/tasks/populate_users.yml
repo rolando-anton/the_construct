@@ -1,7 +1,7 @@
 ---
 - name: Read Users
   read_csv:
-    path: users.csv
+    path: roles/domain-controller/files/users.csv
     key: UserName
   register: users_list
   delegate_to: localhost
