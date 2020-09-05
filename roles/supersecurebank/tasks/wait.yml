@@ -1,0 +1,7 @@
+---
+- name: Wait for system to become reachable over WinRM
+  wait_for_connection:
+    connect_timeout: "{{ wait-connect_timeout }}" 
+    sleep: "{{ wait-sleep }}"
+    delay: "{{  wait-delay }}"
+    timeout: "{{  wait-timeout }}"

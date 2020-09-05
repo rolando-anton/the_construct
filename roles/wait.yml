@@ -1,7 +1,0 @@
----
-- name: Wait for system to become reachable over WinRM
-  wait_for_connection:
-    connect_timeout: 60
-    sleep: 10
-    delay: 10
-    timeout: 300

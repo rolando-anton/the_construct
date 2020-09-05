@@ -1,6 +1,6 @@
 ---
 
-- include_tasks: roles/wait.yml
+- include_tasks: wait.yml
 
 - name: Gather remote facts
   setup: {}

@@ -1,5 +1,5 @@
 ---
-- include_tasks: roles/wait.yml
+- include_tasks: wait.yml
 
 - name: Install AD-Domain-Services feature
   win_feature:
@@ -24,7 +24,7 @@
     safe_mode_password: "40Net123#"
   register: domain_creation
 
-- include_tasks: roles/reboot.yml
+- include_tasks: reboot.yml
   when: domain_creation.reboot_required
 
 - name: Promote Domain Controller

@@ -1,5 +1,5 @@
 ---
-- include_tasks: roles/wait.yml
+- include_tasks: wait.yml
 
 - win_copy:
    src: roles/bootstrap/files/change-to-static.ps1
@@ -11,5 +11,5 @@
   async: 111
   poll: 0
 
-- include_tasks: roles/wait.yml
+- include_tasks: wait.yml
 

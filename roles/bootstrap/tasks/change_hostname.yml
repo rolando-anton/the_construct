@@ -1,12 +1,12 @@
 ---
-- include_tasks: roles/wait.yml
+- include_tasks: wait.yml
 
 - name: Change the hostname 
   win_hostname:
     name: "{{ inventory_hostname }}"
   register: res
 
-- include_tasks: roles/wait.yml
+- include_tasks: wait.yml
 
-- include_tasks: roles/reboot.yml
+- include_tasks: reboot.yml
   when: res.reboot_required
