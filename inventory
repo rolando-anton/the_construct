@@ -34,6 +34,7 @@ all:
       warehouse:
   vars:
     uac_enabled: false
+    disable_ipv6: false 
     dc_domain: dmevals.local
     domain_admin: administrator
     domain_admin_password: 40Net123#

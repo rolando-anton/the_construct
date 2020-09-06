@@ -1,9 +1,10 @@
 - hosts: 
-    endpoints
+     scarnton 
+#endpoints
   gather_facts: no
   roles:
     - role: bootstrap
-    - role: disable-windowsdefender
-    - role: domain-member
-    - role: sysmon
+#    - role: disable-windowsdefender
+#    - role: domain-member
+#    - role: sysmon
 #    - role: fortisiem-agent

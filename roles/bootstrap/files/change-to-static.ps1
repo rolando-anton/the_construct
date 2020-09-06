@@ -1,7 +1,6 @@
-# Author: Rolando Anton
+# Code mixed by: Rolando Anton
 # Contact: rolando@anton.sh
 # Blog: https://rolando.anton.sh
-
 
 # Function from: https://d-fens.ch/2013/11/01/nobrainer-using-powershell-to-convert-an-ipv4-subnet-mask-length-into-a-subnet-mask-address/
 
@@ -26,10 +25,12 @@ function Convert-IpAddressToMaskLength([string] $dottedIpAddressString)
 
 $Adapters = Get-WmiObject win32_networkadapterconfiguration -filter "ipenabled='true'" | Where -Property DHCPEnabled -eq "True"
 
+# Found a way to filter the IPv4 address only using regex :) https://github.com/robison-scott/Everything-Else/blob/765ed0c81bbd816be1e177743c3102d73a1afcd6/Random/Set%20IP.ps1
+
 foreach ($Adapters in $Adapters) {
     $InterfaceIndex = $Adapters.InterfaceIndex
-    $ipAddress = $Adapters.IPAddress
-    $subnetMask = $Adapters.IPSubnet
+    $ipAddress = $Adapters.IPAddress | Select-String -Pattern "(?:(?:1\d\d|2[0-5][0-5]|2[0-4]\d|0?[1-9]\d|0?0?\d)\.){3}(?:1\d\d|2[0-5][0-5]|2[0-4]\d|0?[1-9]\d|0?0?\d)" 
+    $subnetMask = $Adapters.IPSubnet   | Select-String -Pattern "(?:(?:1\d\d|2[0-5][0-5]|2[0-4]\d|0?[1-9]\d|0?0?\d)\.){3}(?:1\d\d|2[0-5][0-5]|2[0-4]\d|0?[1-9]\d|0?0?\d)".ToString().trim()
     $subnetPrefix = Convert-IpAddressToMaskLength $subnetMask
     $dnsServers = $Adapters.DNSServerSearchOrder
     $defaultGateway = $Adapters.DefaultIPGateway
