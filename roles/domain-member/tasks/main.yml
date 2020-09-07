@@ -29,7 +29,9 @@
     domain_admin_password: "{{ domain_admin_password }}"
     domain_ou_path: "{{ workstations_ou }}"
     state: domain
-  register: domain_state
+  when: inventory_hostname in groups['endpoints']
+
+- include_tasks: reboot.yml
   when: inventory_hostname in groups['endpoints']
 
 - name: Join server to the domain
@@ -40,8 +42,7 @@
     domain_admin_password: "{{ domain_admin_password }}"
     domain_ou_path: "{{ servers_ou }}"
     state: domain
-  register: domain_state
   when: inventory_hostname in groups['servers']
 
-- include_tasks: roles/reboot.yml
-  when: domain_state.reboot_required
+- include_tasks: reboot.yml
+  when: inventory_hostname in groups['servers']

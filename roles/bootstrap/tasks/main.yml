@@ -1,4 +1,5 @@
 ---
+- include_tasks: wait.yml
 - name: Set timezone to UTC
   win_timezone:
     timezone: UTC
