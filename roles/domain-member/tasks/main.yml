@@ -7,14 +7,41 @@
     adapter_names: '*'
     ipv4_addresses: "{{ domain_controller_ip }}"
 
+- name: Set domain root
+  set_fact:
+    domain_root_path: DC={{ dc_domain.split('.') | join(',DC=') }}
+
+- name: Set Workstations OU
+  set_fact:
+    workstations_ou: "ou=Workstations,{{ domain_root_path }}"
+  when: inventory_hostname in groups['endpoints']
+
+- name: Set Servers OU
+  set_fact:
+    servers_ou: "ou=Servers,{{ domain_root_path }}"
+  when: inventory_hostname in groups['servers']
+
 - name: Join workstation to the domain
   win_domain_membership:
     dns_domain_name: "{{ dc_domain }}"
     hostname: "{{ ansible_env.COMPUTERNAME }}"
     domain_admin_user: "{{ domain_admin }}@{{ dc_domain }}"
     domain_admin_password: "{{ domain_admin_password }}"
+    domain_ou_path: "{{ workstations_ou }}"
     state: domain
   register: domain_state
+  when: inventory_hostname in groups['endpoints']
+
+- name: Join server to the domain
+  win_domain_membership:
+    dns_domain_name: "{{ dc_domain }}"
+    hostname: "{{ ansible_env.COMPUTERNAME }}"
+    domain_admin_user: "{{ domain_admin }}@{{ dc_domain }}"
+    domain_admin_password: "{{ domain_admin_password }}"
+    domain_ou_path: "{{ servers_ou }}"
+    state: domain
+  register: domain_state
+  when: inventory_hostname in groups['servers']
 
 - include_tasks: roles/reboot.yml
   when: domain_state.reboot_required

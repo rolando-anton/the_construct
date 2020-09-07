@@ -2,13 +2,12 @@
 
 - include_tasks: wait.yml
 
-- name: Gather remote facts
-  setup: {}
-
-- debug:
-    var: ansible_distribution
-
 - name: Disable Windows Defender
   win_shell: |
-     Set-MpPreference -DisableIntrusionPreventionSystem $true -DisableIOAVProtection $true -DisableRealtimeMonitoring $true -DisableScriptScanning $true -EnableControlledFolderAccess Disabled -EnableNetworkProtection AuditMode -Force -MAPSReporting Disabled -SubmitSamplesConsent NeverSend
-  when: ansible_distribution == "Microsoft Windows 10 Enterprise Evaluation"
+    Set-MpPreference -DisableRealtimeMonitoring $True -Force
+    Set-MpPreference -DisableBehaviorMonitoring $True -Force
+    Set-MpPreference -DisableIntrusionPreventionSystem $True -Force
+    Set-MpPreference -ScanScheduleDay Never -Force
+    Set-MpPreference -RemediationScheduleDay Never -Force
+
+#Set-MpPreference -DisableIntrusionPreventionSystem $true -DisableIOAVProtection $true -DisableRealtimeMonitoring $true -DisableScriptScanning $true -EnableControlledFolderAccess Disabled -EnableNetworkProtection AuditMode -MAPSReporting Disabled -SubmitSamplesConsent NeverSend -DisableBehaviorMonitoring $true -Force

@@ -2,6 +2,8 @@
   gather_facts: no
   vars:
       uac_enabled: false 
+      populate_structure: true
+      populate_users: true
       root_ou: Employees
       child_ous:
         - Finance

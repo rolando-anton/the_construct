@@ -42,3 +42,26 @@
     path: "OU={{ item }}, {{ parent_ou }}"
     state: Present
   with_items: "{{ child_ous }}"
+
+- name: Check if Servers OU exists
+  win_shell: Get-ADOrganizationalUnit -Identity "OU=Servers,{{ domain_root_path }}"
+  register: servers_ou
+  changed_when: false
+  ignore_errors: true
+- debug: var=servers_ou
+
+- name: Creating Servers OU
+  win_shell: New-ADOrganizationalUnit -Name "Servers"
+  when: servers_ou is failed
+
+- name: Check if Workstations OU exists
+  win_shell: Get-ADOrganizationalUnit -Identity "OU=Workstations,{{ domain_root_path }}"
+  register: ws_ou
+  changed_when: false
+  ignore_errors: true
+- debug: var=ws_ou
+
+- name: Creating Workstations OU
+  win_shell: New-ADOrganizationalUnit -Name "Workstations"
+  when: ws_ou is failed
+

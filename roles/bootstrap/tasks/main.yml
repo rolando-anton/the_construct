@@ -1,3 +1,7 @@
+---
+- name: Set timezone to UTC
+  win_timezone:
+    timezone: UTC
 - include: re-enable-uac.yml
   when: uac_enabled | bool
 - include: disable_ipv6.yml

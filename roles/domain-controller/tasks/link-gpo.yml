@@ -1,0 +1,25 @@
+---
+
+- name: Check if {{ GPOName }} GPO is linked to {{ OU }}
+  win_shell: |
+    $gPLinks = Get-ADOrganizationalUnit -Identity "{{ OU }}" -Properties name,distinguishedName, gPLink, gPOptions
+    $gPLinks.LinkedGroupPolicyObjects
+  changed_when: false
+  register: adout
+
+- name: Get GPO path
+  win_shell: >
+    Get-GPO -Name "{{ GPOName }}" | foreach { $_.Id } | Out-String -stream | select-object -skip 3 | select-object -first 1
+  changed_when: false
+  register: gpopath
+
+- name: Linking GPO
+  win_shell: >
+    New-GPLink -Name "{{ GPOName }}" -Target "{{ OU }}" -Enforced yes
+  when: not (adout.stdout|string and gpopath.stdout|string and gpopath.stdout_lines[0]|lower in adout.stdout|lower)
+  notify:
+    - Run gpupdate
+
+#- name: Refreshing GPO on Members
+#  win_shell: >
+#    Get-ADComputer -filter * -Searchbase "{{ OU }}" | foreach{ Invoke-GPUpdate -computer $_.name -force -RandomDelayInMinutes 0}

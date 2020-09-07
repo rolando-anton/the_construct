@@ -1,3 +1,8 @@
-#- include: deploy.yml
-#- include: populate_structure.yml
+- include: deploy.yml
+  when: deploy_dc | bool
+- include: populate_structure.yml
+  when: populate_structure | bool
 - include: populate_users.yml
+  when: populate_users | bool
+- include: gpo_disable_windows_defender.yml
+  when: gpo_disable_windows_defender | bool
