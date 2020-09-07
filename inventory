@@ -1,6 +1,8 @@
 all:
   hosts:
-   warehouse: 
+   gateway:
+      ansible_host: 10.100.55.1
+   warehouse:
       ansible_host: 10.100.55.2
    newyork:  
       ansible_host: 10.100.55.3
@@ -10,17 +12,10 @@ all:
       ansible_host: 10.100.55.5
    nashua: 
       ansible_host: 10.100.55.6
-   gateway:
-      ansible_host: 10.100.55.1
-      ansible_connection: httpapi
-      ansible_user: admin
-      ansible_password: fortipocadmin 
-      vdom: "root"
-      ansible_httpapi_use_ssl: yes
-      ansible_httpapi_validate_certs: no
-      ansible_httpapi_port: 443
-      ansible_network_os: fortinet.fortios.fortios
   children:
+   gateways:
+    hosts:
+      gateway:
    dc:
     hosts:
       newyork:
@@ -29,25 +24,6 @@ all:
       scarnton:
       utica:
       nashua:
-   fileserver:
+   servers:
     hosts:
       warehouse:
-  vars:
-    uac_enabled: false
-    disable_ipv6: false 
-    dc_domain: dmevals.local
-    domain_admin: administrator
-    domain_admin_password: 40Net123#
-    domain_controller_ip: 10.0.0.4
-    reboot_timeout: 120
-    reboot_post_delay: 120
-    wait_connect_timeout: 60
-    wait_sleep: 10
-    wait_delay: 10
-    wait_timeout: 300
-    ansible_user: fpocadmin
-    ansible_password: 40Net123#
-    ansible_winrm_server_cert_validation: ignore
-    ansible_connection: winrm
-    ansible_winrm_operation_timeout_sec: 300
-    ansible_winrm_read_timeout_sec: 900

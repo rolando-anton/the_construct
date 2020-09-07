@@ -1,0 +1,22 @@
+# features
+uac_enabled: false
+disable_ipv6: false
+# environment
+dc_domain: dmevals.local
+domain_controller_ip: 10.0.0.4
+ansible_winrm_server_cert_validation: ignore
+ansible_connection: winrm
+# credentials
+domain_admin: administrator
+domain_admin_password: 40Net123#
+ansible_user: fpocadmin
+ansible_password: 40Net123#
+# time outs
+reboot_timeout: 120
+reboot_post_delay: 120
+wait_connect_timeout: 60
+wait_sleep: 10
+wait_delay: 10
+wait_timeout: 300
+ansible_winrm_operation_timeout_sec: 300
+ansible_winrm_read_timeout_sec: 900

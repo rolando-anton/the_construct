@@ -1,20 +1,7 @@
 - hosts: dc 
   gather_facts: no
-  vars:
-      uac_enabled: false 
-      deploy_dc: false
-      populate_structure: false
-      populate_users: false
-      gpo_disable_windows_defender: true
-      root_ou: Employees
-      child_ous:
-        - Finance
-        - IT
-        - Marketing
-        - Operations
-        - Sales
   roles:
-#    - role: bootstrap
+    - role: bootstrap
     - role: domain-controller
 #    - role: fortisiem-agent
 

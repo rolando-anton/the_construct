@@ -1,0 +1,12 @@
+uac_enabled: false
+deploy_dc: true
+populate_structure: true
+populate_users: true
+gpo_disable_windows_defender: true
+root_ou: Employees
+child_ous:
+  - Finance
+  - IT
+  - Marketing
+  - Operations
+  - Sales

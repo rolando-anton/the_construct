@@ -1,16 +1,5 @@
 - hosts: dc 
   gather_facts: no
-  vars:
-      uac_enabled: false 
-      populate_structure: true
-      populate_users: true
-      root_ou: Employees
-      child_ous:
-        - Finance
-        - IT
-        - Marketing
-        - Operations
-        - Sales
   roles:
     - role: bootstrap
     - role: domain-controller
@@ -20,8 +9,13 @@
   gather_facts: no
   roles:
     - role: bootstrap
-    - role: disable-windowsdefender
     - role: domain-member
     - role: sysmon
 #    - role: fortisiem-agent
 
+- hosts: servers
+  gather_facts: no
+  roles:
+    - role: bootstrap
+    - role: domain-member
+    - role: sysmon
