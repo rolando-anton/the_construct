@@ -1,0 +1,5 @@
+- hosts: gateway
+  collections:
+  - fortinet.fortios
+  roles:
+    - fos-ldap-server

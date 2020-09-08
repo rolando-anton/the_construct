@@ -19,10 +19,17 @@
     vdom:  "{{ vdom }}"
     state: "present"
     user_fsso_polling:
-      id:  "6"
+      id:  "0"
       ldap_server: "DMEVALS_DC"
       server: "{{ domain_controller_ip }}"
       port: "389"
       user: "{{ domain_admin }}"
       password: "{{ domain_admin_password }}"
+      adgrp:
+        - name: "OU=Employees,DC=dmevals,DC=local"
+        - name: "OU=Finance,OU=Employees,DC=dmevals,DC=local"
+        - name: "OU=IT,OU=Employees,DC=dmevals,DC=local"
+        - name: "OU=Marketing,OU=Employees,DC=dmevals,DC=local"
+        - name: "OU=Operations,OU=Employees,DC=dmevals,DC=local"
+        - name : "OU=Sales,OU=Employees,DC=dmevals,DC=local"
       status: enable
