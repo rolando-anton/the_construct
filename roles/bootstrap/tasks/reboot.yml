@@ -1,6 +1,6 @@
 ---
 - name: Reboot
   win_reboot:
-    pre_reboot_delay : 60
+    pre_reboot_delay : "{{ pre_reboot_delay }}" 
     connect_timeout: "{{ reboot_timeout }}"
     post_reboot_delay: "{{ reboot_post_delay }}"

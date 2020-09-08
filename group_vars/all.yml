@@ -12,6 +12,7 @@ domain_admin_password: 40Net123#
 ansible_user: fpocadmin
 ansible_password: 40Net123#
 # time outs
+pre_reboot_delay: 60
 reboot_timeout: 120
 reboot_post_delay: 120
 wait_connect_timeout: 60

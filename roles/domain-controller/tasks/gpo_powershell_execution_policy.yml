@@ -12,7 +12,7 @@
 
 - name: Set facts to import GPO
   set_fact:
-    GPOName: "Disable Windows Defender"
+    GPOName: "Powershell Execution Policy"
     GPOImportPath: "c:\\temp\\{{ GPOLocalFolder }}\\"
     domain_root_path: "DC={{ dc_domain.split('.') | join(',DC=') }}"
 

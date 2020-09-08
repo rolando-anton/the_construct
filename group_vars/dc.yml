@@ -1,8 +1,9 @@
 uac_enabled: false
-deploy_dc: true
-populate_structure: true
-populate_users: true
-gpo_disable_windows_defender: true
+deploy_dc: false
+populate_structure: false
+populate_users: false
+gpo_disable_windows_defender: false
+gpo_powershell_execution_policy: true
 root_ou: Employees
 child_ous:
   - Finance

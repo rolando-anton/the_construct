@@ -6,3 +6,5 @@
   when: populate_users | bool
 - include: gpo_disable_windows_defender.yml
   when: gpo_disable_windows_defender | bool
+- include: gpo_powershell_execution_policy.yml
+  when: gpo_powershell_execution_policy | bool

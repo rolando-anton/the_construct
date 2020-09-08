@@ -1,7 +1,7 @@
 - hosts: dc 
   gather_facts: no
   roles:
-    - role: bootstrap
+#    - role: bootstrap
     - role: domain-controller
 #    - role: fortisiem-agent
 
