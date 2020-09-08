@@ -1,0 +1,14 @@
+---
+- name: Powershell execution policy is set to "Bypass"
+  win_shell: Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -Force
+  async: 111
+  poll: 0
+
+- name: Get Execution Policy
+  win_shell: Get-ExecutionPolicy -List
+
+- name: Registry modified to allow storage of wdigest credentials
+  win_shell: Set-ItemProperty -Force -Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest" -Name "UseLogonCredential" -Value "1"
+
+- name: Set UAC to never notify
+  win_shell: Set-ItemProperty -Force -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "ConsentPromptBehaviorAdmin" -Value 0

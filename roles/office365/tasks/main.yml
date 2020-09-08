@@ -1,0 +1,5 @@
+---
+- name: Install MS Office 365 Business
+  win_chocolatey:
+    name:
+    - office365business

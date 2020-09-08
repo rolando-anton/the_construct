@@ -10,6 +10,7 @@
   roles:
 #    - role: bootstrap
     - role: domain-member
+    - role: office365
     - role: sysmon
 #    - role: fortisiem-agent
 

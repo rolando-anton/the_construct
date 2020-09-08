@@ -1,0 +1,13 @@
+- hosts: 
+    scarnton
+  gather_facts: no
+
+  tasks:
+  - name: Use Kerberos authentication for the connection (requires smbprotocol[kerberos])
+    psexec:
+      hostname: "{{ inventory_hostname }}"
+      connection_username: helen.davis@dmevals.local
+      connection_password: Helen.Davis123#
+      executable: whoami.exe
+      arguments: /all
+    delegate_to: localhost
