@@ -12,10 +12,13 @@ all:
       ansible_host: 10.100.55.5
    nashua: 
       ansible_host: 10.100.55.6
+   analyzer:
+      ansible_host: 10.100.55.8
   children:
-   gateways:
+   fortinet_fabric:
     hosts:
       gateway:
+      analyzer:
    dc:
     hosts:
       newyork:

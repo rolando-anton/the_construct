@@ -1,7 +1,9 @@
 - hosts: dc 
   gather_facts: no
-  roles:
+#  roles:
 #    - role: bootstrap
-    - role: domain-controller
+#    - role: domain-controller
 #    - role: fortisiem-agent
+  tasks:
+   - debug: msg="{{ hostvars['newyork']['ansible_host'] }}"
 
