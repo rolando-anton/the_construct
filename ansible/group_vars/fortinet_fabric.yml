@@ -1,7 +1,11 @@
-ansible_connection: httpapi
+vdom: "root"
+fsm_admin: root
+fsm_password: ProspectHills
+fsm_org: super
+fsm_collector_name: collector
 ansible_user: admin
 ansible_password: fortipocadmin
-vdom: "root"
+ansible_connection: httpapi
 ansible_httpapi_use_ssl: yes
 ansible_httpapi_validate_certs: no
 ansible_httpapi_port: 443

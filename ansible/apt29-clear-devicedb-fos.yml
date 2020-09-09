@@ -1,0 +1,7 @@
+- hosts: gateway
+  gather_facts: no
+  vars:
+    ansible_connection: ssh
+  tasks:
+  - name: Clear device identity database
+    raw: diagnose user device clear

@@ -1,23 +1,37 @@
 ---
-
 - win_copy:
-   src: 'roles/fortisiem-agent/files/AoWinAgt-v4.0.0-07132020.exe'
-   dest: 'C:\temp\'
-   remote_src: no
+  src: "roles/fortisiem-agent/files/{{ fsmagent_installer }}.exe"
+  dest: "C:\temp\"
+  remote_src: no
 
-- win_copy:
-   src: 'roles/fortisiem-agent/files/InstallSettings.xml'
-   dest: 'C:\temp\'
+- name: Deploy Windows Agent template settings
+  win_copy:
+   content: |
+      <InstallConfig Version="1">
+      <Org>
+         <ID>{{ fsm_org_id }}</ID>
+         <Name>{{ fsm_org }}</Name>
+      </Org>
+      <Super>
+         <Name>{{ hostvars['fsm_super']['ansible_host'] }}</Name>
+         <Port>443</Port>
+      </Super>
+      <Registration>
+         <Username>{{ fsmagent_admin }}</Username>
+         <Password>{{ fsmagent_password }}</Password>
+      </Registration>
+      <Proxy />
+      <SSLCertificate>ignore</SSLCertificate>
+      </InstallConfig>
+   dest: 'C:\temp\InstallSettings.xml'
    remote_src: no
 
 - name: Install FortiSIEM Windows Agent
   win_package:
-    path: 'C:\temp\AoWinAgt-v4.0.0-07132020.exe'
+    path: 'C:\temp\{{ fsmagent_installer }}.exe'
     arguments:
       - /install
       - /quiet
-      - /log fsmagent.txt
+      - /log c:\temp\fsmagent.txt
     chdir: 'C:\temp\'
     product_id: 'FSM'
-
-- include_tasks: roles/wait.yml

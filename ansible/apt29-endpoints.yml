@@ -6,9 +6,10 @@
 #    - role: disable-windowsdefender
 #    - role: domain-member
 #    - role: sysmon
-#    - role: fortisiem-agent
+    - role: fortisiem-agent
 #     - role: office365
-     - role: apt29-extra
+#    - role: apt29-extra
+#    - role: atomic_red_team
 #  vars:
 #    ansible_user: administrator@dmevals.local
 #    ansible_password: 40Net123#

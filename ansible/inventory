@@ -14,11 +14,17 @@ all:
       ansible_host: 10.100.55.6
    analyzer:
       ansible_host: 10.100.55.8
+   fsm_super:
+      ansible_host: 10.100.88.20
+   fsm_collector:
+      ansible_host: 10.0.0.10
   children:
    fortinet_fabric:
     hosts:
       gateway:
       analyzer:
+      fsm_super:
+      fsm_collector:
    dc:
     hosts:
       newyork:

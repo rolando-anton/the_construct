@@ -1,0 +1,8 @@
+---
+- name: Register Collector to Supervisor
+  command: phProvisionCollector --add {{ fsm_admin }} {{ fsm_password }} {{ hostvars['fsm_super']['ansible_host'] }} {{ fsm_org }} {{ fsm_collector_name }}
+  register: register_result
+
+- name: Get Registration Result
+  debug:
+    msg: "{{ register_result }}"

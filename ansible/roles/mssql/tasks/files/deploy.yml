@@ -1,0 +1,146 @@
+---
+- name: Prepare Windows with IIS and MSSQL with sample database
+  hosts: all
+  tasks:
+    - name: Change the hostname to sample-hostname
+      win_hostname:
+        name: iis-mssql
+      register: res
+
+    - name: Reboot
+      win_reboot:
+      when: res.reboot_required
+
+    - name: Install IIS Web-Server with sub features and management tools
+      win_feature:
+        name: Web-Server,web-asp-Net,Web-Http-Logging
+        state: present
+        include_sub_features: yes
+        include_management_tools: yes
+      register: win_feature
+
+    - name: Reboot if installing Web-Server feature requires it
+      win_reboot:
+      when: win_feature.reboot_required
+
+    - name: Install MSSQL 2014 Express and Tools
+      win_chocolatey:
+        name:
+         - mssqlserver2014express
+         - msdeploy
+        state: present
+
+    - name: Fix PowerShell modules installation
+      win_shell: |
+         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+         Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+         Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+         [Net.ServicePointManager]::SecurityProtocol = "tls12"
+         Install-Module sqlserver -AllowClobber
+
+    - name: Install MSSQL Powershell Module
+      win_psmodule:
+         name: sqlserver
+         allow_clobber: yes
+
+    - name: cloning git repo
+      raw: git clone https://github.com/rolando-anton/FSM-Demo_IIS_MSSQL_SuperSecureBank/ C:\Windows\Temp\SecureBank_Demo
+
+    - name: Restore SuperSecureBank Database
+      win_shell: invoke-sqlcmd -inputfile 'C:\Windows\Temp\SecureBank_Demo\aio.sql' -serverinstance "IIS-MSSQL\SQLEXPRESS" -database "master"
+
+    - name: Enabling MSSQL TCP port 1433
+      win_shell: |
+        import-module sqlps;
+        $MachineObject = new-object ('Microsoft.SqlServer.Management.Smo.WMI.ManagedComputer') $env:computername
+        $instance = $MachineObject.getSmoObject("ManagedComputer[@Name='$env:computername']/" + "ServerInstance[@Name='SQLEXPRESS']")
+        $instance.ServerProtocols['Tcp'].IPAddresses['IPAll'].IPAddressProperties['TcpPort'].Value = "1433"
+        $instance.ServerProtocols['Tcp'].IPAddresses['IPAll'].IPAddressProperties['TcpDynamicPorts'].Value = ""
+        $instance.ServerProtocols['Tcp'].IsEnabled = $true;
+        $instance.ServerProtocols['Tcp'].Alter()
+
+    - name: Enable MSSQL Mixed Mode Authentication
+      win_regedit:
+        path: HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQLServer
+        name: LoginMode
+        data: 2
+        type: dword
+
+    - name: Enable MSSQL Audit all Logins
+      win_regedit:
+        path: HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQLServer
+        name: AuditLevel
+        data: 3
+        type: dword
+
+    - name: Executing MSSQL Auditing Scripts
+      win_shell: invoke-sqlcmd -inputfile 'C:\Windows\Temp\SecureBank_Demo\PH_Audit_Setup.sql' -serverinstance "IIS-MSSQL\SQLEXPRESS" -database "master"
+
+    - name: Restart MSSQL Service
+      win_service:
+        name: MSSQL$SQLEXPRESS
+        state: restarted
+
+    - name: Firewall rule to allow SQL Server on TCP port 1433
+      win_firewall_rule:
+        name: SQL Server
+        localport: 1433
+        action: allow
+        direction: in
+        protocol: tcp
+        state: present
+        enabled: yes
+
+    - name: Remove Default Web Site
+      win_iis_website:
+        name: "Default Web Site"
+        state: absent
+
+    - name: Download Site Backup
+      win_get_url:
+        url: 'https://github.com/rolando-anton/SuperSecureBank/raw/master/site.zip'
+        dest: 'C:\Windows\Temp\site.zip'
+        validate_certs: no
+
+    - name: Unzip Site Backup
+      win_unzip:
+        src: 'C:\Windows\Temp\site.zip'
+        dest: 'C:\Windows\Temp\'
+
+    - name: Creating Application Pool in IIS
+      win_iis_webapppool:
+        name: SuperSecureBankPool
+        state: started
+        attributes:
+          managedRuntimeVersion: v4.0
+          managedPipelineMode: Integrated
+          processModel.identityType: SpecificUser
+          processModel.userName: fpocadmin
+          processModel.password: 40Net123#
+          processModel.loadUserProfile: true
+
+    - name: Configure IIS Site
+      win_iis_website:
+        name: SuperSecureBank
+        state: started
+        port: 80
+        application_pool: SuperSecureBankPool
+        physical_path: C:\inetpub\wwwroot
+        register: website
+
+    - name: Deploy SuperSecureBank Web Application
+      win_shell: |
+        $msdeploypath = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\IIS Extensions\MSDeploy\*" | select -ExpandProperty InstallPath
+        $msdeployexe = "msdeploy.exe"
+        $msdeploy = $msdeploypath + $msdeployexe
+        $msdeployArgs = @(
+        "-verb:sync",
+        "-source:package=C:\Windows\Temp\site\SuperSecureBank.zip",
+        "-dest:auto,includeAcls='False'",
+        "-disableLink:AppPoolExtension",
+        "-disableLink:ContentExtension",
+        "-disableLink:CertificateExtension",
+        "-setParamFile:C:\Windows\Temp\site\SuperSecureBank.SetParameters.xml"
+        "-verbose"
+        )
+        Start-Process $msdeploy -NoNewWindow -ArgumentList $msdeployArgs

@@ -1,0 +1,12 @@
+---
+- name: Forward Logs from FortiAnalyzer to FortiSIEM
+  raw: |
+   config system log-forward
+   edit 1
+   set mode forwarding
+   set fwd-max-delay realtime
+   set server-name "FortiSIEM"
+   set server-ip "{{ hostvars['fsm_collector']['ansible_host'] }}"
+   set fwd-server-type syslog
+   set fwd-log-source-ip original_ip
+   end

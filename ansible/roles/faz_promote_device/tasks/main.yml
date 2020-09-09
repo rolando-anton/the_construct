@@ -1,0 +1,11 @@
+---
+- name: Promote Enterprise_Core in FAZ
+  delay: 60
+  retries: 10
+  faz_device:
+    adom: "root"
+    device_password: "fortisiemadmin"
+    device_unique_name: "Enterprise_Core"
+    device_username: "admin"
+    mgmt_mode: "faz"
+    mode: "promote"
