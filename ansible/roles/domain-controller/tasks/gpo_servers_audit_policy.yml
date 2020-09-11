@@ -1,0 +1,31 @@
+---
+- include_tasks: wait.yml
+
+- name: "Install GroupPolicyDSC"
+  win_psmodule:
+    name: GroupPolicyDSC
+    state: present
+
+- name: Set environment facts
+  set_fact:
+    GPOLocalFolder: "Servers_Enhanced_Auditing_Policy"
+
+- name: Set facts to import GPO
+  set_fact:
+    GPOName: "Servers Enhanced Auditing Policy"
+    GPOImportPath: "c:\\temp\\{{ GPOLocalFolder }}\\"
+    domain_root_path: "DC={{ dc_domain.split('.') | join(',DC=') }}"
+
+- name: Set OUs to apply the GPO
+  set_fact:
+    OU_list:
+      - "OU=Servers,{{ domain_root_path }}"
+      - "OU=Workstations,{{ domain_root_path }}"
+
+
+- win_copy:
+   src: "files/gpo/{{ GPOLocalFolder }}"
+   dest: "c:\\temp\\"
+   remote_src: no
+
+- include: gpo.yml

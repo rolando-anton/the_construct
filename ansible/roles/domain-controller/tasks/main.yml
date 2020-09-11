@@ -8,3 +8,9 @@
   when: gpo_disable_windows_defender | bool
 - include: gpo_windows_firewall.yml
   when: gpo_windows_firewall | bool
+- include: gpo_servers_audit_policy.yml
+  when: gpo_servers_audit_policy | bool
+- include: gpo_workstations_audit_policy.yml
+  when: gpo_workstations_audit_policy | bool
+- include: gpo_domain_controller_audit_policy.yml
+  when: gpo_domain_controller_audit_policy | bool

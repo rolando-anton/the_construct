@@ -1,6 +1,0 @@
-- hosts: analyzer
-  gather_facts: no
-  vars:
-    ansible_connection: ssh
-  roles:
-    - faz_to_fsm 

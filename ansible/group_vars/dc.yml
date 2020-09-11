@@ -4,6 +4,9 @@ populate_structure: false
 populate_users: false
 gpo_disable_windows_defender: false
 gpo_windows_firewall: true
+gpo_servers_audit_policy: true
+gpo_workstations_audit_policy: true
+gpo_domain_controller_audit_policy: true
 root_ou: Employees
 child_ous:
   - Finance

@@ -1,9 +1,0 @@
-- hosts: endpoint_01
-  gather_facts: no
-  vars:
-      fts_ip: 10.100.66.11 
-      fts_user: admin
-      fts_pass: fortipocadmin
-  roles:
-    - role: disable-windowsdefender
-    - role: atomic_red_team
