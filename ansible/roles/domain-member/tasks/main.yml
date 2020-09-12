@@ -46,3 +46,9 @@
 
 - include_tasks: reboot.yml
   when: inventory_hostname in groups['servers']
+
+- name: Ensure domain users can RDP on any workstation
+  win_group_membership:
+    name: Remote Desktop Users
+    members: "{{ dc_domain }}\\Domain Users"
+  when: inventory_hostname in groups['endpoints']

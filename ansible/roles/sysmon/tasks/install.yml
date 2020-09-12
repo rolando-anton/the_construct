@@ -26,9 +26,10 @@
 
 - block:
     - name: Copy Sysmon template
-      win_get_url:
-        url: 'https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml'
+      win_copy:
+        src: "{{ role_path }}/files/sysmonconfig.xml"
         dest: 'c:\Program Files\sysmon\sysmonconfig.xml'
+        remote_src: no
 
     - name: install sysmon with defined config
       win_command: '"c:\Program Files\sysmon\sysmon64.exe" -accepteula -i "c:\Program Files\sysmon\sysmonconfig.xml"'

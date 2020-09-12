@@ -1,8 +1,8 @@
 uac_enabled: false
-deploy_dc: false
-populate_structure: false
-populate_users: false
-gpo_disable_windows_defender: false
+deploy_dc: true 
+populate_structure: true 
+populate_users: true
+gpo_disable_windows_defender: true 
 gpo_windows_firewall: true
 gpo_servers_audit_policy: true
 gpo_workstations_audit_policy: true

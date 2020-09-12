@@ -8,7 +8,7 @@
 
 - name: Set environment facts
   set_fact:
-    GPOLocalFolder: "powershell_execution_policy"
+    GPOLocalFolder: "disable_windows_defender"
 
 - name: Set facts to import GPO
   set_fact:

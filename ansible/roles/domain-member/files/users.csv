@@ -1,0 +1,32 @@
+UserName,GivenName,Surname,StreetAddress,City,Country,TelephoneNumber,OU,Group
+Althea.McFall,Althea,McFall,493 Rainbow Drive,Creston,US,330-435-2023,Finance,Managers
+Tracie.Carter,Tracie,Carter,2331 Riverside Drive,Augusta,US,706-849-4283,Finance,Employees
+David.Jones,David,Jones,494 Geneva Street,New York,US,917-486-9333,Finance,Employees
+Nicole.Young,Nicole,Young,888 Oakmound Drive,Chicago,US,773-417-4056,Finance,Employees
+Walter.Miles,Walter,Miles,3496 Arbutus Drive,Miami,US,305-909-2297,Finance,Employees
+Emma.Slade,Emma,Slade,1374 Ashmor Drive,Fargo,US,218-331-1520,Finance,Employees
+Lorie.Cieslak,Lorie,Cieslak,3285 Atha Drive,Bakersfield,US,661-584-9083,IT,Managers
+Carol.Williams,Carol,Williams,2222 Norma Lane,Shreveport,US,318-560-3023,IT,Employees
+Sharon.Myers,Sharon,Myers,428 Lost Creek Road,Minneapolis,US,612-207-9295,IT,Employees
+Leroy.Negrete,Leroy,Negrete,3387 Brentwood Drive,Dripping Springs,US,512-858-1696,IT,Employees
+Justin.Verdugo,Justin,Verdugo,1039 Davis Avenue,San Francisco,US,707-669-0382,IT,Employees
+Angela.Simmons,Angela,Simmons,4863 Ella Street,San Francisco,US,650-207-4432,IT,Employees
+Shawn.Silveira,Shawn,Silveira,1464 Hickory Lane,Washington,US,202-502-3840,Marketing,Managers
+William.Spencer,William,Spencer,983 Snowbird Lane,Omaha,US,402-660-0280,Marketing,Employees
+Thelma.Jordan,Thelma,Jordan,3883 University Drive,Hickory Hills,US,312-805-1174,Marketing,Employees
+Jacqueline.Paul,Jacqueline,Paul,3580 Harron Drive,Columbia,US,443-574-6572,Marketing,Employees
+Bonnie.Thomas,Bonnie,Thomas,3701 Mayo Street,Cincinnati,US,859-640-0909,Marketing,Employees
+Susan.Brown,Susan,Brown,2649 Randall Drive,Waipahu,US,808-895-7082,Marketing,Employees
+Mary.Brown,Mary,Brown,490 Hickory Lane,Washington,US,202-532-6851,Operations,Managers
+Robert.Craig,Robert,Craig,3254 Monroe Street,Houston,US,713-383-4708,Operations,Employees
+Timothy.Fuller,Timothy,Fuller,3377 Harrison Street,Novato,US,415-506-3565,Operations,Employees
+Patricia.Allen,Patricia,Allen,4594 Sussex Court,Evant,US,254-471-7738,Operations,Employees
+Gisela.Santos,Gisela,Santos,4895 Glen Street,Earlington,US,270-383-0555,Operations,Employees
+James.Estepp,James,Estepp,4067 Mount Street,Birch Run,US,989-624-7715,Operations,Employees
+Brian.Esposito,Brian,Esposito,4031 Frank Avenue,Amherst,US,413-253-8451,Sales,Managers
+James.Mobley,James,Mobley,1279 Layman Avenue,Fayetteville,US,910-907-0027,Sales,Employees
+Anissa.Christian,Anissa,Christian,906 Hampton Meadows,Ipswich,US,978-356-2826,Sales,Employees
+Daniel.McCarthy,Daniel,McCarthy,1308 Adams Avenue,Frederick,US,301-620-8663,Sales,Employees
+David.Williams,David,Williams,3981 Upton Avenue,Portland,US,207-939-3116,Sales,Employees
+Debra.Rudd,Debra,Rudd,951 Burning Memory Lane,Phila,US,215-303-5036,Sales,Employees
+Helen.Davis,Helen,Davis,1166 Wescam Court,Reno,US,775-931-9822,Sales,Employees
