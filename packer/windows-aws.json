@@ -1,0 +1,130 @@
+{
+  "builders": [
+    {
+      "type": "qemu",
+      "output_directory": "./output/{{ user `name`}}",
+      "vm_name": "{{user `name`}}",
+      "disk_compression": true,    
+      "headless": true,
+      "boot_wait": "1m",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_urls": [
+        "{{ user `iso_url` }}"
+      ],      
+      "communicator": "winrm",
+      "winrm_username": "{{user `packer_user`}}",
+      "winrm_password": "{{user `packer_pass`}}",
+      "winrm_timeout": "12h",
+      "winrm_port": "5986",
+      "winrm_use_ssl": "true",
+      "winrm_insecure": "true",
+      "shutdown_command": "C:/Windows/packer/PackerShutdown.bat",
+      "shutdown_timeout": "10m",
+      "disk_size": "{{user `disk_size`}}",
+      "qemuargs": [
+        [ "-m", "4096M" ],
+        [ "-cpu", "Westmere" ]
+      ],      
+      "floppy_files": "{{ user `floppy_files_list` }}",    
+      "qemuargs": [
+        [ "-m", "{{ user `memory` }}" ],
+        [ "-smp", "cpus={{ user `cpus`}}"]
+      ]
+    },
+      {
+        "type": "vsphere-iso",
+  
+        "vcenter_server": "{{user `vsphere-server`}}",
+        "username": "{{user `vsphere-user`}}",
+        "password": "{{user `vsphere-password`}}",
+        "insecure_connection": "true",
+  
+        "datacenter": "{{user `vsphere-datacenter`}}",
+        "cluster": "{{user `vsphere-cluster`}}",
+        "network": "{{user `vsphere-network`}}",
+        "datastore": "{{user `vsphere-datastore`}}",
+        "folder": "{{user `vsphere-folder`}}",
+  
+        "communicator": "winrm",
+        "winrm_username": "Administrator",
+        "winrm_password": "{{user `winadmin-password`}}",
+  
+        "convert_to_template": "true",
+
+        "vm_name": "{{user `vm-name`}}",
+        "guest_os_type": "windows9Server64Guest",
+  
+        "CPUs": "{{user `vm-cpu-num`}}",
+        "RAM": "{{user `vm-mem-size`}}",
+        "RAM_reserve_all": true,
+        "firmware": "bios",
+  
+        "disk_controller_type": "lsilogic-sas",
+        "disk_size": "{{user `vm-disk-size`}}",
+        "disk_thin_provisioned": true,
+  
+        "network_card": "vmxnet3",
+  
+        "iso_paths": [
+          "{{user `os_iso_path`}}",
+          "[] /vmimages/tools-isoimages/windows.iso"
+        ],
+      "floppy_files": "{{ user `floppy_files_list` }}"
+      }
+    ],
+
+
+  "provisioners": [
+    {
+      "type": "windows-shell",
+      "scripts": [
+        "scripts/unlimited-password-expiration.bat",
+        "scripts/uac-disable.bat",
+        "scripts/disable-hibernate.bat"
+	]
+    },
+    {
+      "type": "powershell",
+      "pause_before": "120s",
+      "scripts": [
+      "scripts/set_firewall_rules.ps1",
+      "scripts/install-choco.ps1",
+      "scripts/install_aws_components.ps1",
+      "scripts/dis-updates.ps1"
+     ]    
+    },   
+    {
+      "type": "powershell",
+        "inline": [
+            "Write-Host \"Installing Tools\"",
+            "choco install googlechrome 7zip notepadplusplus choco-cleaner git.install"
+        ]
+    },
+
+    {
+      "type": "windows-shell",
+      "inline":      "choco-cleaner.bat"
+    },
+    {
+      "type": "powershell",
+      "script":  "scripts/disable-windows-features.ps1"
+    },
+
+    {
+      "type": "windows-restart"
+    },
+
+    {
+      "type": "powershell",
+      "script":  "scripts/cleanup.ps1"
+    },
+    {
+      "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/save_shutdown_command1.ps1"
+    }
+  ]
+}

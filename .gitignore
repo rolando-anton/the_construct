@@ -1,2 +1,4 @@
 group_vars/all/main.yml
 *.retry
+packer/packer_cache
+packer/output
