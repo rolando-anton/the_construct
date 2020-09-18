@@ -87,11 +87,10 @@
       </ImageInstall>
       <UserData>
         <ProductKey>
-          <!-- <Key>WC2BQ-8NRM3-FDDYY-2BFGV-KHKQY</Key> -->
           <WillShowUI>OnError</WillShowUI>
         </ProductKey>
         <AcceptEula>true</AcceptEula>
-        <FullName>FPOC Admin</FullName>
+        <FullName>FortiAdmin</FullName>
         <Organization>/Dev/Null</Organization>
       </UserData>
     </component>
@@ -158,18 +157,10 @@
                     <Order>2</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
-        
-          <SynchronousCommand wcm:action="add">
-          <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\ConfigureRemotingForAnsible.ps1</CommandLine>
-          <Order>3</Order>
-        </SynchronousCommand>
-
                 <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c a:\install-vm-tools.cmd</CommandLine>
-                    <Order>4</Order>
-                    <Description>Install VMware Tools</Description>
+                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\ConfigureRemotingForAnsible.ps1</CommandLine>
+                    <Order>3</Order>
                 </SynchronousCommand>
-
       </FirstLogonCommands>
       <OOBE>
         <HideEULAPage>true</HideEULAPage>
@@ -195,9 +186,9 @@
               <PlainText>true</PlainText>
             </Password>
             <Group>administrators</Group>
-            <DisplayName>FortiPoC Admin</DisplayName>
+            <DisplayName>FortiAdmin</DisplayName>
             <Name>fortiadmin</Name>
-            <Description>FortiPoC Admin</Description>
+            <Description>FortiAdmin</Description>
           </LocalAccount>
         </LocalAccounts>
       </UserAccounts>
