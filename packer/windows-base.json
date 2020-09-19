@@ -2,6 +2,7 @@
   "builders": [
     {
       "type": "qemu",
+      "name": "",
       "boot_wait": "1m",
       "disk_compression": true,
       "disk_size": "{{user `disk_size`}}",
@@ -80,6 +81,10 @@
           "disk_thin_provisioned": true
         }
       ],
+      "export": {
+        "force": true,
+        "output_directory": "output_{{user `name`}}"
+      },
       "winrm_timeout": "4h",
       "winrm_use_ssl": "true",
       "winrm_insecure": "true",
@@ -97,23 +102,13 @@
       "type": "windows-shell"
     },
     {
-      "pause_before": "120s",
+      "pause_before": "60s",
       "type": "powershell",
       "scripts": [
         "scripts/set_firewall_rules.ps1",
         "scripts/install-choco.ps1",
         "scripts/dis-updates.ps1"
-      ],
-      "override": {
-        "vsphere-iso": {
-          "scripts": [
-            "scripts/set_firewall_rules.ps1",
-            "scripts/install-choco.ps1",
-            "scripts/dis-updates.ps1",
-            "scripts/install_aws_components.ps1"
-          ]
-        }
-      }
+      ]
     },
     {
       "inline": [
@@ -126,6 +121,7 @@
       "inline": "New-Item -Path \"C:\\Windows\\packer\" -ItemType Directory -Force",
       "type": "powershell"
     },
+    
     {
       "type": "file",
       "source": "scripts/PackerShutdown.bat",
@@ -172,31 +168,33 @@
     [
        {
          "only": ["qemu"],
-         "name": "gcp",
          "type": "compress",
-         "output": "output/{{user `name`}}.raw.tar.gz"
+         "format": ".tar.gz"
        },
        {
-         "type": "shell-local",
-         "inline": [
-          "gsutil cp output/{{user `name`}}.raw.tar.gz {{user `gcs_bucket`}}/{{user `name`}}.raw.tar.gz",
-          "gcloud compute images create {{user `name`}} \\",
-          "--source-uri={{user `gcs_bucket`}}/{{user `name`}}.raw.tar.gz \\",
-          "--family={{user `image_family`}}"
-         ]
-       },
-   
+        "only": ["qemu"],
+        "name": "gcp",
+        "type": "googlecompute-import",
+        "project_id": "{{user `gcp_project`}}",
+        "account_file": "{{user `gcp_account_file`}}",
+        "bucket": "{{user `gcp_bucket`}}",
+        "image_name": "{{user `name`}}-{{timestamp}}"
+      },
     {
      "type": "shell-local",
+     "name": "convert-to-ova",
      "only": ["vsphere-iso"],
-     "inline": [ "/usr/bin/ovftool output/{{user `name`}}.vmx output/{{user `name`}}.ova" ]
+     "inline": [ 
+        "/usr/bin/ovftool output_{{user `name`}}/{{user `name`}}.ovf output_{{user `name`}}/{{user `name`}}.ova",
+        "rm -vf output_{{user `name`}}/{{user `name`}}.ovf output_{{user `name`}}/{{user `name`}}.mf output_{{user `name`}}/{{user `name`}}-disk-0.vmdk"
+     ]
     },
     {
-        "files": [
-          "output/{{user `name`}}.ova"
-        ],
-        "type": "artifice",
-        "only": ["vsphere-iso"]
+      "only": ["vsphere-iso"],
+      "files": [
+        "output_{{user `name`}}/{{user `name`}}.ova"
+      ],
+     "type": "artifice"
     },
     {
       "type": "amazon-import",
@@ -206,7 +204,7 @@
       "secret_key": "{{user `aws_secret_key`}}",
       "region": "{{user `aws_region`}}",
       "s3_bucket_name": "{{user `aws_s3_bucket_name`}}",
-      "s3_key_name": "packer-vmware-iso.ova",
+      "s3_key_name": "{{user `name`}}-{{timestamp}}.ova",
       "keep_input_artifact": true,
       "license_type": "BYOL",
       "tags": {
