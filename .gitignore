@@ -3,3 +3,5 @@ group_vars/all/main.yml
 packer/packer_cache
 packer/output*
 packer/gcp.json
+**/terraform.tfvars
+**/.terraform/
