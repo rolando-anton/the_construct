@@ -9,7 +9,7 @@
   "vsphere-network": "VM Network" ,
   "vsphere-datastore": "NVMe01",
   "vsphere-folder": "",
-  "packer_user": "fortiadmin",
+  "packer_user": "labadmin",
   "packer_pass": "40Net123#",
   "disk_size": "81920",
   "memory": "4096",
@@ -20,5 +20,5 @@
   "iso_url": "https://software-download.microsoft.com/download/pr/17763.737.190906-2324.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us_1.iso",
   "name": "windows_2019-aws",
   "version" : "1",
-  "floppy_files_list" : "floppy/ConfigureRemotingForAnsible.ps1,floppy/install_aws_components.ps1,floppy/install-vm-tools.cmd,autounattend/windows_2019/vsphere/autounattend.xml"
+  "floppy_files_list" : "floppy/ConfigureRemotingForAnsible.ps1,floppy/install_aws_components.ps1,floppy/install-vm-tools.cmd,autounattend/windows_2019/aws/autounattend.xml"
 }

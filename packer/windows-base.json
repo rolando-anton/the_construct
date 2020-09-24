@@ -204,8 +204,8 @@
       "secret_key": "{{user `aws_secret_key`}}",
       "region": "{{user `aws_region`}}",
       "s3_bucket_name": "{{user `aws_s3_bucket_name`}}",
-      "s3_key_name": "{{user `name`}}-{{timestamp}}.ova",
-      "keep_input_artifact": true,
+      "s3_key_name": "{{user `name`}}.ova",
+      "keep_input_artifact": false,
       "license_type": "BYOL",
       "tags": {
         "Description": "packer amazon-import {{timestamp}}"

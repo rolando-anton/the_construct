@@ -1,5 +1,5 @@
 {
-    "packer_user": "fortiadmin",
+    "packer_user": "labadmin",
     "packer_pass": "40Net123#",
     "disk_size": "81920",
     "memory": "8192",

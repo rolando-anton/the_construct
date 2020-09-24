@@ -91,7 +91,7 @@
           <WillShowUI>OnError</WillShowUI>
         </ProductKey>
         <AcceptEula>true</AcceptEula>
-        <FullName>FPOC Admin</FullName>
+        <FullName>Lab Admin</FullName>
         <Organization>/Dev/Null</Organization>
       </UserData>
     </component>
@@ -143,7 +143,7 @@
           <PlainText>true</PlainText>
         </Password>
         <Enabled>true</Enabled>
-        <Username>fortiadmin</Username>
+        <Username>labadmin</Username>
       </AutoLogon>
       <FirstLogonCommands>
                 <SynchronousCommand wcm:action="add">
@@ -197,9 +197,9 @@
               <PlainText>true</PlainText>
             </Password>
             <Group>administrators</Group>
-            <DisplayName>FortiPoC Admin</DisplayName>
-            <Name>fortiadmin</Name>
-            <Description>FortiPoC Admin</Description>
+            <DisplayName>Lab Admin</DisplayName>
+            <Name>labadmin</Name>
+            <Description>Lab Admin</Description>
           </LocalAccount>
         </LocalAccounts>
       </UserAccounts>

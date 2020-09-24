@@ -90,7 +90,7 @@
           <WillShowUI>OnError</WillShowUI>
         </ProductKey>
         <AcceptEula>true</AcceptEula>
-        <FullName>FPOC Admin</FullName>
+        <FullName>Lab Admin</FullName>
         <Organization>/Dev/Null</Organization>
       </UserData>
     </component>
@@ -166,9 +166,9 @@
               <PlainText>true</PlainText>
             </Password>
             <Group>administrators</Group>
-            <DisplayName>FortiPoC Admin</DisplayName>
+            <DisplayName>Lab Admin</DisplayName>
             <Name>fpocadmin</Name>
-            <Description>FortiPoC Admin</Description>
+            <Description>Lab Admin</Description>
           </LocalAccount>
         </LocalAccounts>
       </UserAccounts>

@@ -2,6 +2,6 @@ group_vars/all/main.yml
 *.retry
 packer/packer_cache
 packer/output*
-packer/gcp.json
+**/gcp.json
 **/terraform.tfvars
 **/.terraform/

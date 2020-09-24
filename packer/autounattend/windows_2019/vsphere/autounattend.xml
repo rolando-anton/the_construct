@@ -90,7 +90,7 @@
           <WillShowUI>OnError</WillShowUI>
         </ProductKey>
         <AcceptEula>true</AcceptEula>
-        <FullName>FortiAdmin</FullName>
+        <FullName>LabAdmin</FullName>
         <Organization>/Dev/Null</Organization>
       </UserData>
     </component>
@@ -134,7 +134,7 @@
           <PlainText>true</PlainText>
         </Password>
         <Enabled>true</Enabled>
-        <Username>fortiadmin</Username>
+        <Username>labadmin</Username>
       </AutoLogon>
       <FirstLogonCommands>
                 <SynchronousCommand wcm:action="add">
@@ -183,9 +183,9 @@
               <PlainText>true</PlainText>
             </Password>
             <Group>administrators</Group>
-            <DisplayName>FortiAdmin</DisplayName>
-            <Name>fortiadmin</Name>
-            <Description>FortiAdmin</Description>
+            <DisplayName>LabAdmin</DisplayName>
+            <Name>labadmin</Name>
+            <Description>LabAdmin</Description>
           </LocalAccount>
         </LocalAccounts>
       </UserAccounts>

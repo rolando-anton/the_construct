@@ -7,7 +7,7 @@
     "vsphere-network": "VM Network" ,
     "vsphere-datastore": "NVMe01",
     "vsphere-folder": "",
-    "packer_user": "fortiadmin",
+    "packer_user": "labadmin",
     "packer_pass": "40Net123#",
     "disk_size": "81920",
     "memory": "4096",

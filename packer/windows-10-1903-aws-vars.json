@@ -9,7 +9,7 @@
     "vsphere-network": "VM Network" ,
     "vsphere-datastore": "NVMe01",
     "vsphere-folder": "",
-    "packer_user": "fortiadmin",
+    "packer_user": "labadmin",
     "packer_pass": "40Net123#",
     "disk_size": "81920",
     "memory": "4096",
@@ -20,5 +20,5 @@
     "iso_checksum_type": "sha256",
     "name": "windows_10-1903-aws",
     "version" : "1",
-    "floppy_files_list" : "floppy/ConfigureRemotingForAnsible.ps1,floppy/install_aws_components.ps1,floppy/install-vm-tools.cmd,autounattend/windows_10/vsphere/autounattend.xml"
+    "floppy_files_list" : "floppy/ConfigureRemotingForAnsible.ps1,floppy/install_aws_components.ps1,floppy/install-vm-tools.cmd,autounattend/windows_10/aws/autounattend.xml"
 }
