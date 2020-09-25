@@ -134,7 +134,7 @@
           <PlainText>true</PlainText>
         </Password>
         <Enabled>true</Enabled>
-        <Username>fpocadmin</Username>
+        <Username>labadmin</Username>
       </AutoLogon>
       <FirstLogonCommands>
         <SynchronousCommand wcm:action="add">
@@ -167,7 +167,7 @@
             </Password>
             <Group>administrators</Group>
             <DisplayName>Lab Admin</DisplayName>
-            <Name>fpocadmin</Name>
+            <Name>labadmin</Name>
             <Description>Lab Admin</Description>
           </LocalAccount>
         </LocalAccounts>

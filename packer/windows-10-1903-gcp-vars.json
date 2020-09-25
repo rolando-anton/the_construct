@@ -3,6 +3,7 @@
     "packer_pass": "40Net123#",
     "compress": "false",
     "disk_size": "81920",
+    "disk_format": "raw",
     "memory": "8192",
     "cpus": "12",
     "headless": "true",
@@ -12,6 +13,6 @@
     "name": "disk.raw",
     "version" : "1",
     "gcs_bucket" : "packer_images",
-    "image_family": "windows_10_1903",
+    "image_family": "windows-10-1903",
     "floppy_files_list" : "floppy/drivers/win10/*,floppy/ConfigureRemotingForAnsible.ps1,autounattend/windows_10/qemu/autounattend.xml"
 }
