@@ -4,7 +4,7 @@
       "type": "qemu",
       "name": "",
       "boot_wait": "1m",
-      "disk_compression": true,
+      "disk_compression": "{{ user `compress`}}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": "{{ user `floppy_files_list` }}",
       "headless": true,
@@ -169,17 +169,23 @@
        {
          "only": ["qemu"],
          "type": "compress",
-         "format": ".tar.gz"
+         "output": "output/disk.raw.tar.gz",
+	 "format": ".tar.gz"
        },
-       {
-        "only": ["qemu"],
+
+      {
+        "type": "shell-local",
         "name": "gcp",
-        "type": "googlecompute-import",
-        "project_id": "{{user `gcp_project`}}",
-        "account_file": "{{user `gcp_account_file`}}",
-        "bucket": "{{user `gcp_bucket`}}",
-        "image_name": "{{user `name`}}-{{timestamp}}"
+        "only": ["qemu"],	
+        "inline": [
+         "gsutil cp output/disk.raw.tar.gz {{user `gcs_bucket`}}/{{user `image_family`}}.tar.gz",
+         "gcloud compute images create {{user `image_family`}} \\",
+         "--source-uri={{user `gcs_bucket`}}/{{user `image_family`}}.tar.gz \\",
+         "--family={{user `image_family`}}"
+        ]
       },
+
+
     {
      "type": "shell-local",
      "name": "convert-to-ova",
@@ -194,7 +200,7 @@
       "files": [
         "output_{{user `name`}}/{{user `name`}}.ova"
       ],
-     "type": "artifice"
+      "type": "artifice"
     },
     {
       "type": "amazon-import",
