@@ -9,7 +9,7 @@ ansible_connection: winrm
 # credentials
 domain_admin: administrator
 domain_admin_password: 40Net123#
-ansible_user: fpocadmin
+ansible_user: labadmin
 ansible_password: 40Net123#
 # time outs
 pre_reboot_delay: 60
