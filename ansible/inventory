@@ -6,7 +6,7 @@ all:
       ansible_host: 10.100.55.2
    newyork:  
       ansible_host: 10.100.55.3
-   scarnton: 
+   scranton: 
       ansible_host: 10.100.55.4
    utica: 
       ansible_host: 10.100.55.5
@@ -30,7 +30,7 @@ all:
       newyork:
    endpoints:
     hosts: 
-      scarnton:
+      scranton:
       utica:
       nashua:
    servers:
