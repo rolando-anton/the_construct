@@ -13,6 +13,13 @@
   debug:
     msg: "{{adds_result}}"
 
+- name: Fix PowerShell modules installation
+  win_shell: |
+     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+     Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+     [Net.ServicePointManager]::SecurityProtocol = "tls12"
+
 - name: Ensure xActiveDirectory PS DSC module is installed
   win_psmodule:
     name: xActiveDirectory

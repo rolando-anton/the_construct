@@ -30,14 +30,17 @@
     raw: diagnose user device clear
 
 - hosts: gateway
+  gather_facts: no
+  vars:
+    ansible_connection: httpapi
   collections:
   - fortinet.fortios
   roles:
     - fos-ldap-server
 
-- hosts: analyzer
-  gather_facts: no
-  vars:
-    ansible_connection: ssh
-  roles:
-    - faz_to_fsm
+#- hosts: analyzer
+#  gather_facts: no
+#  vars:
+#    ansible_connection: ssh
+#  roles:
+#    - faz_to_fsm
