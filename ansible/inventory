@@ -3,15 +3,15 @@ all:
    gateway:
       ansible_host: 10.100.55.1
    warehouse:
-      ansible_host: 10.100.55.2
-   newyork:  
-      ansible_host: 10.100.55.3
-   scranton: 
-      ansible_host: 10.100.55.4
-   utica: 
-      ansible_host: 10.100.55.5
-   nashua: 
-      ansible_host: 10.100.55.6
+      ansible_host: 10.0.0.5
+   newyork:
+      ansible_host: 10.0.0.4
+   scranton:
+      ansible_host: 10.0.1.4
+   utica:
+      ansible_host: 10.0.1.5
+   nashua:
+      ansible_host: 10.0.1.6
    analyzer:
       ansible_host: 10.100.55.8
    fsm_super:

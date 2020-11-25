@@ -1,0 +1,15 @@
+- hosts: dc 
+  gather_facts: no
+  roles:
+    - role: fortisiem-agent
+
+- hosts: endpoints 
+  gather_facts: no
+  roles:
+    - role: sysmon
+    - role: fortisiem-agent
+
+- hosts: servers
+  gather_facts: no
+  roles:
+    - role: sysmon
