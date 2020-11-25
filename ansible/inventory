@@ -15,9 +15,9 @@ all:
    analyzer:
       ansible_host: 10.100.55.8
    fsm_super:
-      ansible_host: 10.100.88.20
+      ansible_host: 10.100.88.80
    fsm_collector:
-      ansible_host: 10.0.0.10
+      ansible_host: 10.100.55.81
   children:
    fortinet_fabric:
     hosts:
