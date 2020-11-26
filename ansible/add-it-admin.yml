@@ -1,0 +1,8 @@
+---
+- hosts: dc
+  tasks:
+  - name: Add a local and domain user to a local group
+    community.windows.win_domain_group_membership:
+      name: Domain Admins
+      members: "{{ dc_domain }}\\IT-Managers"
+      state: present

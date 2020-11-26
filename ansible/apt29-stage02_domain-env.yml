@@ -1,12 +1,18 @@
-- hosts: fsm_collector
+- hosts: dc
   gather_facts: no
-  vars:
-    ansible_connection: ssh
-    ansible_user: root
-    ansible_password: 40Net123#
-    fsm_admin: admin
-    fsm_password: '40net123#'
-    fsm_org: super
-    fsm_collector_name: collector
   roles:
-     - fsm_register_collector
+  #  - role: sysmon
+    - role: fortisiem-agent
+
+- hosts: endpoints
+  gather_facts: no
+  roles:
+#    - role: sysmon
+    - role: fortisiem-agent
+
+- hosts: servers
+  gather_facts: no
+  roles:
+ #   - role: sysmon
+    - role: fortisiem-agent
+

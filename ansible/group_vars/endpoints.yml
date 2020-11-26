@@ -1,6 +1,0 @@
-# FortiSIEM Agent configuration
-fsmagent_installer: files/FSMLogAgent-v4.0.0-build002.exe
-fsmagent_admin: "super/agentadmin"
-fsmagent_password: "40Net123#"
-fsm_org: super
-fsm_org_id: 1

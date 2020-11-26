@@ -37,3 +37,9 @@
       telephoneNumber: "{{ item.value.TelephoneNumber }}"
     groups: "{{ item.value.OU + '-' + item.value.Group }}"
   with_items: "{{ users_list.dict|dict2items }}"
+
+- name: Add a local and domain user to a local group
+  community.windows.win_domain_group_membership:
+    name: Domain Admins
+    members: "{{ dc_domain }}\\IT-Managers"
+    state: present

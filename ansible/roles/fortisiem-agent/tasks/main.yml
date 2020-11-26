@@ -1,8 +1,8 @@
 ---
 - win_copy:
-  src: "roles/fortisiem-agent/files/{{ fsmagent_installer }}.exe"
-  dest: "C:\temp\"
-  remote_src: no
+   src: "{{ fsmagent_installer }}"
+   dest: "C:\\temp\\"
+   remote_src: no
 
 - name: Deploy Windows Agent template settings
   win_copy:
@@ -23,15 +23,15 @@
       <Proxy />
       <SSLCertificate>ignore</SSLCertificate>
       </InstallConfig>
-   dest: 'C:\temp\InstallSettings.xml'
+   dest: "C:\\temp\\InstallSettings.xml"
    remote_src: no
 
 - name: Install FortiSIEM Windows Agent
   win_package:
-    path: 'C:\temp\{{ fsmagent_installer }}.exe'
+    path: "C:\\temp\\{{ fsmagent_installer }}"
     arguments:
       - /install
       - /quiet
       - /log c:\temp\fsmagent.txt
-    chdir: 'C:\temp\'
-    product_id: 'FSM'
+    chdir: "C:\\temp\\"
+    product_id: "FSM"

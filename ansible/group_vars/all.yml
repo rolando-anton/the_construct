@@ -21,3 +21,9 @@ wait_delay: 10
 wait_timeout: 300
 ansible_winrm_operation_timeout_sec: 300
 ansible_winrm_read_timeout_sec: 900
+# FSM Agent
+fsmagent_installer: FSMLogAgent-v4.0.0-build002.exe
+fsmagent_admin: "super/agentadmin"
+fsmagent_password: "40Net123@"
+fsm_org: super
+fsm_org_id: 1
