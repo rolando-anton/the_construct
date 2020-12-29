@@ -1,6 +1,6 @@
 ---
 - name: Read Users
-  read_csv:
+  community.general.read_csv:
     path: '{{ role_path }}/files/users.csv'
     key: UserName
   register: users_list
