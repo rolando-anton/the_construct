@@ -51,6 +51,8 @@
     RetryCount: 100
     RetryIntervalSec: 10
 
+- include_tasks: wait.yml
+
 - name: Set a weak password policy
   win_command: powershell.exe -
   args:
