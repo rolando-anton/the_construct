@@ -6,27 +6,11 @@
     populate_structure: true
     populate_users: true
     gpo_disable_windows_defender: true
-    gpo_windows_firewall: true
+    gpo_windows_firewall: false
     gpo_servers_audit_policy: true
-    gpo_workstations_audit_policy: true
+    gpo_workstations_audit_policy: false
     gpo_domain_controller_audit_policy: true
-    root_ou: Employees
-    child_ous:
-       - Finance
-       - IT
-       - Marketing
-       - Operations
-       - Sales
-    domain_admin: administrator
-    domain_admin_password: 40Net123#
-    fsmagent_installer: FSMLogAgent-v4.0.0-build002.exe
-    fsmagent_admin: "super/agentadmin"
-    fsmagent_password: "40Net123@"
-    fsm_org: super
-    fsm_org_id: 1
   roles:
-#    - role: bootstrap
-#    - role: domain-controller
-    - role: domain-populate
+    - role: bootstrap
+    - role: domain-controller
     - role: sysmon
-    - role: fortisiem-agent
