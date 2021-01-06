@@ -4,5 +4,9 @@ all:
       ansible_host: 10.100.55.80
    fsm_collector:
       ansible_host: 10.100.55.81
-   dc:
+   ad:
       ansible_host: 10.99.1.11
+  children:
+   dc:
+    hosts:
+       ad:
