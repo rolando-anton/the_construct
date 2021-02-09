@@ -1,0 +1,9 @@
+---
+  - name: wait for reboot
+    wait_for_connection:
+      timeout: 10
+    register: result
+    until: result is not failed
+    retries: 180
+    delay: 5
+

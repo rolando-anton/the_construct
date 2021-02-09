@@ -1,0 +1,4 @@
+- hosts: dc,endpoints 
+  gather_facts: no
+  tasks:
+    - include: first-wait.yml

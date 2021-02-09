@@ -1,9 +1,13 @@
+- hosts: dc,endpoints
+  gather_facts: no
+  tasks:
+    - include: first-boot.yml
+ 
 - hosts: dc 
   gather_facts: no
   roles:
     - role: bootstrap
     - role: domain-controller
-#    - role: fortisiem-agent
 
 - hosts: endpoints 
   gather_facts: no
@@ -12,5 +16,3 @@
     - role: domain-member
     - role: office365
     - role: sysmon
-#    - role: fortisiem-agent
-
