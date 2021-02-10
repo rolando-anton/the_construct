@@ -5,3 +5,6 @@
     sleep: "{{ wait_sleep }}"
     delay: "{{ wait_delay }}"
     timeout: "{{ wait_timeout }}"
+  register: wait_result  
+  until: wait_result is not failed
+
